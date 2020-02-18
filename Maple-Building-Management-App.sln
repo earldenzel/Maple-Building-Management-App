@@ -1,0 +1,39 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.29424.173
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Maple-Building-Management-App", "Maple-Building-Management-App\Maple-Building-Management-App.csproj", "{F0F88411-60D7-4C04-BCCE-9EA9FFD88565}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataLibrary", "DataLibrary\DataLibrary.csproj", "{0FD965D5-778B-4E7A-87B1-C74BB684F59D}"
+EndProject
+Project("{00D1A9C2-B5F0-4AF3-8072-F6C62B433612}") = "MapleDB", "MapleDB\MapleDB.sqlproj", "{72E4B726-156A-4BD5-8D54-720A4A076E7A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F0F88411-60D7-4C04-BCCE-9EA9FFD88565}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F0F88411-60D7-4C04-BCCE-9EA9FFD88565}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F0F88411-60D7-4C04-BCCE-9EA9FFD88565}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F0F88411-60D7-4C04-BCCE-9EA9FFD88565}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0FD965D5-778B-4E7A-87B1-C74BB684F59D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0FD965D5-778B-4E7A-87B1-C74BB684F59D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0FD965D5-778B-4E7A-87B1-C74BB684F59D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0FD965D5-778B-4E7A-87B1-C74BB684F59D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E4B726-156A-4BD5-8D54-720A4A076E7A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{72E4B726-156A-4BD5-8D54-720A4A076E7A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{72E4B726-156A-4BD5-8D54-720A4A076E7A}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{72E4B726-156A-4BD5-8D54-720A4A076E7A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{72E4B726-156A-4BD5-8D54-720A4A076E7A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{72E4B726-156A-4BD5-8D54-720A4A076E7A}.Release|Any CPU.Deploy.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {700AB3F8-731C-47D8-BA77-038E81BC67D6}
+	EndGlobalSection
+EndGlobal
