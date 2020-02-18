@@ -28,6 +28,7 @@ namespace Maple_Building_Management_App.Models
         public string Password { get; set; }
 
         [Display(Name = "Confirm Password")]
+        [DataType(DataType.Password)]
         [Compare("Password", ErrorMessage = "Your password and confirm password do not match")]
         public string ConfirmPassword { get; set; }
 
