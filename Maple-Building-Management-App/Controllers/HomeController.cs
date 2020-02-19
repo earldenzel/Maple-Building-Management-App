@@ -76,5 +76,12 @@ namespace Maple_Building_Management_App.Controllers
 
             return View();
         }
+
+        public ActionResult Login()
+        {
+            ViewBag.Message = "App Login";
+
+            return View();
+        }
     }
 }
