@@ -76,5 +76,44 @@ namespace Maple_Building_Management_App.Controllers
 
             return View();
         }
+
+        public ActionResult CreateComplaint()
+        {
+            ViewBag.Message = "Create Complaint";
+
+
+            List<SelectListItem> items = new List<SelectListItem>();
+
+            items.Add(new SelectListItem { Text = "Action", Value = "0" });
+
+            items.Add(new SelectListItem { Text = "Drama", Value = "1" });
+
+            items.Add(new SelectListItem { Text = "Comedy", Value = "2", Selected = true });
+
+            items.Add(new SelectListItem { Text = "Science Fiction", Value = "3" });
+
+            ViewBag.ComplaintTypes = items;
+
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult CreateComplaint(ComplaintModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //int recordsCreated = CreateComplaint(
+                    //model.FirstName,
+                    //model.LastName,
+                    //model.EmailAddress,
+                    //model.Tenant,
+                    //model.PropertyCode
+                //    );
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
     }
 }

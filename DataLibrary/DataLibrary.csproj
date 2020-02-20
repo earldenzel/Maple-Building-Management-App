@@ -47,7 +47,9 @@
   <ItemGroup>
     <Compile Include="DataAccess\SqlDataAccess.cs" />
     <Compile Include="Logic\AccountProcessor.cs" />
+    <Compile Include="Logic\ComplaintProcessor.cs" />
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\ComplaintModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup />
