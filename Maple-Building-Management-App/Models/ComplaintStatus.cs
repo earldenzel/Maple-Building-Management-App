@@ -7,9 +7,9 @@ namespace Maple_Building_Management_App.Models
 {
     public enum ComplaintStatus
     {
-        Open,
-        Pending,
-        Resolved,
-        Reopened
+        Open = 1,
+        Pending = 2,
+        Resolved = 3,
+        Reopened = 4
     }
 }

@@ -6,9 +6,15 @@ using System.Threading.Tasks;
 
 namespace DataLibrary.Models
 {
-    class ComplaintModel
+    public class ComplaintModel
     {
         public int Id { get; set; }
-
+        public int TenantId { get; set; }
+        public int PropertyManagerId { get; set; }
+        public DateTime IncidentDate { get; set; }
+        public DateTime ReportedDate { get; set; }
+        public string Details { get; set; }
+        public int ComplaintTypeId { get; set; }
+        public int ComplaintStatusId { get; set; }
     }
 }

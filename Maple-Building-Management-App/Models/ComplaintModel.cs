@@ -9,14 +9,13 @@ namespace Maple_Building_Management_App.Models
 {
     public class ComplaintModel
     {
-        private DateTime incidentDate = DateTime.MinValue;
-
-        [HiddenInput(DisplayValue = false)]
-        public int ComplaintID { get; set; } //TODO: automatically create from database binding
-
         [Display(Name = "Type of Complaint")]
+        [Required(ErrorMessage = "Complaint Type is required")]
         public string ComplaintType { get; set; }
-        public IEnumerable<SelectListItem> ComplaintTypes { get; set; }
+
+        [Display(Name = "Complaint Status")]
+        [Required(ErrorMessage = "Complaint Status is required")]
+        public string ComplaintStatus { get; set; }
 
         [Display(Name = "Description of the Complaint")]
         [Required(ErrorMessage = "Description of the complaint is required")]
@@ -27,20 +26,6 @@ namespace Maple_Building_Management_App.Models
         [Display(Name = "When did this start?")]
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
-        public DateTime IncidentDate
-        {
-            get
-            {
-                return (incidentDate == DateTime.MinValue) ? DateTime.Now : incidentDate;
-            }
-            set
-            {
-                incidentDate = value;
-            }
-        }
-
-        [HiddenInput(DisplayValue = false)]
-        [DataType(DataType.Date)]
-        public DateTime ReportedDateTime { get; set; }
+        public DateTime IncidentDate { get; set; } = DateTime.Now;
     }
 }

@@ -1,10 +1,12 @@
 ﻿@model Maple_Building_Management_App.Models.ComplaintModel
 
 @{
-    ViewBag.Title = "CreateComplaint";
+    ViewBag.Title = "File Complaint";
 }
 
-<h2>CreateComplaint</h2>
+@using Maple_Building_Management_App.Models;
+
+<h2>File Complaint</h2>
 
 
 @using (Html.BeginForm()) 
@@ -12,21 +14,28 @@
     @Html.AntiForgeryToken()
     
     <div class="form-horizontal">
-        <h4>ComplaintModel</h4>
+        <h4>File a Complaint for your Property Manager</h4>
         <hr />
-        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })   
+
         <div class="form-group">
-            @Html.LabelFor(model => model.ComplaintID, htmlAttributes: new { @class = "control-label col-md-2" })
+            @Html.LabelFor(model => model.ComplaintStatus, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ComplaintID, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ComplaintID, "", new { @class = "text-danger" })
+                @Html.DropDownListFor(model => model.ComplaintStatus,
+                    new SelectList(Enum.GetValues(typeof(ComplaintStatus))),
+                    "",
+                    htmlAttributes: new { @class = "form-control" } )
+                @Html.ValidationMessageFor(model => model.ComplaintStatus, "", new { @class = "text-danger" })
             </div>
         </div>
 
         <div class="form-group">
             @Html.LabelFor(model => model.ComplaintType, htmlAttributes: new { @class = "control-label col-md-2" })
             <div class="col-md-10">
-                @Html.EditorFor(model => model.ComplaintType, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.DropDownListFor(model => model.ComplaintType,
+                    new SelectList(Enum.GetValues(typeof(ComplaintType))),
+                    "",
+                    htmlAttributes: new { @class = "form-control" } )
                 @Html.ValidationMessageFor(model => model.ComplaintType, "", new { @class = "text-danger" })
             </div>
         </div>
@@ -44,14 +53,6 @@
             <div class="col-md-10">
                 @Html.EditorFor(model => model.IncidentDate, new { htmlAttributes = new { @class = "form-control" } })
                 @Html.ValidationMessageFor(model => model.IncidentDate, "", new { @class = "text-danger" })
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.ReportedDateTime, htmlAttributes: new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.ReportedDateTime, new { htmlAttributes = new { @class = "form-control" } })
-                @Html.ValidationMessageFor(model => model.ReportedDateTime, "", new { @class = "text-danger" })
             </div>
         </div>
 

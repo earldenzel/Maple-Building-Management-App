@@ -10,23 +10,32 @@ namespace DataLibrary.Logic
 {
     public static class ComplaintProcessor
     {
-        public static int CreateComplaint(string firstName, string lastName, string emailAddress, bool tenant, string propertyCode)
+        public static int CreateComplaint(int tenantId, 
+                                          int propertyManagerId, 
+                                          DateTime incidentDate, 
+                                          string details, 
+                                          int complaintTypeId, 
+                                          int complaintStatusId)
         {
             ComplaintModel data = new ComplaintModel
             {
-
-
+                TenantId = tenantId,
+                PropertyManagerId = propertyManagerId,
+                IncidentDate = incidentDate,
+                Details = details,
+                ComplaintStatusId = complaintStatusId,
+                ComplaintTypeId = complaintTypeId
             };
 
-            string sql = @"INSERT INTO dbo.Account (FirstName, LastName, EmailAddress, Tenant, PropertyCode)
-                               VALUES (@FirstName, @LastName, @EmailAddress, @Tenant, @PropertyCode);";
+        string sql = @"INSERT INTO dbo.Complaint (TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId)
+                               VALUES (@TenantId, @PropertyManagerId, @IncidentDate, @Details, @ComplaintStatusId, @ComplaintTypeId);";
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        public static List<AccountModel> LoadAccounts()
+        public static List<ComplaintModel> LoadComplaints()
         {
-            string sql = "SELECT Id, FirstName, LastName, EmailAddress, Tenant, PropertyCode from dbo.Account;";
-            return SqlDataAccess.LoadData<AccountModel>(sql);
+            string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
+            return SqlDataAccess.LoadData<ComplaintModel>(sql);
         }
     }
 }

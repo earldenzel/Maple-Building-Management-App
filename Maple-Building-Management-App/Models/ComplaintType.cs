@@ -7,9 +7,9 @@ namespace Maple_Building_Management_App.Models
 {
     public enum ComplaintType
     {
-        Emergency,
-        Pests,
-        Maintenance,
-        Noise
+        Emergency = 1,
+        Pests = 2,
+        Maintenance = 3,
+        Noise = 4
     }
 }

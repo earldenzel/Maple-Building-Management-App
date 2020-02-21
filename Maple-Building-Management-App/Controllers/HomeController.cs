@@ -6,6 +6,7 @@ using System.Web.Mvc;
 using Maple_Building_Management_App.Models;
 using DataLibrary;
 using static DataLibrary.Logic.AccountProcessor;
+using static DataLibrary.Logic.ComplaintProcessor;
 
 namespace Maple_Building_Management_App.Controllers
 {
@@ -77,39 +78,33 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
-        public ActionResult CreateComplaint()
+        public ActionResult FileComplaint()
         {
+            ComplaintModel model = new ComplaintModel();
+            model.IncidentDate = DateTime.Today;
+            model.ComplaintStatus = ComplaintStatus.Open.ToString();
             ViewBag.Message = "Create Complaint";
 
+            Session["TenantID"] = 1;
+            Session["PropertyID"] = 2;
 
-            List<SelectListItem> items = new List<SelectListItem>();
-
-            items.Add(new SelectListItem { Text = "Action", Value = "0" });
-
-            items.Add(new SelectListItem { Text = "Drama", Value = "1" });
-
-            items.Add(new SelectListItem { Text = "Comedy", Value = "2", Selected = true });
-
-            items.Add(new SelectListItem { Text = "Science Fiction", Value = "3" });
-
-            ViewBag.ComplaintTypes = items;
-
-            return View();
+            return View(model);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult CreateComplaint(ComplaintModel model)
+        public ActionResult FileComplaint(ComplaintModel model)
         {
             if (ModelState.IsValid)
             {
-                //int recordsCreated = CreateComplaint(
-                    //model.FirstName,
-                    //model.LastName,
-                    //model.EmailAddress,
-                    //model.Tenant,
-                    //model.PropertyCode
-                //    );
+                int recordsCreated = CreateComplaint(
+                    (int)Session["TenantID"],
+                    (int)Session["PropertyID"],
+                    model.IncidentDate,
+                    model.Description,
+                    (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
+                    (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
+                );
                 return RedirectToAction("Index");
             }
 

@@ -172,7 +172,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\ViewAccounts.cshtml" />
-    <Content Include="Views\Home\CreateComplaint.cshtml" />
+    <Content Include="Views\Home\FileComplaint.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
