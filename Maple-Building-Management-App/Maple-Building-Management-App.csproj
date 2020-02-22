@@ -125,6 +125,7 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ComplaintModel.cs" />
     <Compile Include="Models\ComplaintStatus.cs" />
     <Compile Include="Models\ComplaintType.cs" />
@@ -172,6 +173,7 @@
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\ViewAccounts.cshtml" />
+    <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\FileComplaint.cshtml" />
   </ItemGroup>
   <ItemGroup>

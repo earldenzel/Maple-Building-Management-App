@@ -1,5 +1,18 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Operations Version="1.0" xmlns="http://schemas.microsoft.com/sqlserver/dac/Serialization/2012/02">
+  <Operation Name="Rename Refactor" Key="1a7c1ed6-1124-4444-a332-d2e0677f514a" ChangeDateTime="02/21/2020 23:08:38">
+    <Property Name="ElementName" Value="[dbo].[Account].[Password]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Account]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="PasswordHash" />
+  </Operation>
+  <Operation Name="Rename Refactor" Key="aba34250-7faf-4894-9532-35e8c470065a" ChangeDateTime="02/22/2020 02:19:00">
+    <Property Name="ElementName" Value="[dbo].[Account].[PasswordHash]" />
+    <Property Name="ElementType" Value="SqlSimpleColumn" />
+    <Property Name="ParentElementName" Value="[dbo].[Account]" />
+    <Property Name="ParentElementType" Value="SqlTable" />
+    <Property Name="NewName" Value="Password" />
   <Operation Name="Rename Refactor" Key="73e3f539-300d-4786-99e5-df6fc5787991" ChangeDateTime="02/21/2020 05:11:13">
     <Property Name="ElementName" Value="[dbo].[ComplaintType].[Value]" />
     <Property Name="ElementType" Value="SqlSimpleColumn" />

@@ -75,4 +75,7 @@
   <ItemGroup>
     <RefactorLog Include="MapleDB.refactorlog" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="MapleDB.refactorlog" />
+  </ItemGroup>
 </Project>
