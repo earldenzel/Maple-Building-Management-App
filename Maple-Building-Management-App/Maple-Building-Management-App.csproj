@@ -173,6 +173,8 @@
     <Content Include="Views\Home\ViewAccounts.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\FileComplaint.cshtml" />
+    <Content Include="Views\Home\SuccessfulComplaint.cshtml" />
+    <Content Include="Views\Home\SuccessfulRegister.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

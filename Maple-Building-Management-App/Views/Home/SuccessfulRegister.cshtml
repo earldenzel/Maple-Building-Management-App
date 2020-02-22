@@ -1,0 +1,22 @@
+﻿@model Maple_Building_Management_App.Models.AccountModel
+
+@{
+    ViewBag.Title = "SuccessfulRegister";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width" />
+    <title></title>
+</head>
+<body>
+    <p>
+        <br><br>
+        <br><br>
+        <br><br>
+        <h2>Thank you, @Model.FirstName @Model.LastName</h2>
+        <br><br>Creation of your Account has been successful.<br />
+        A confirmation e-mail to @Model.EmailAddress will be sent shortly.
+    </p>
+</body>
+</html>
