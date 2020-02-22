@@ -3,7 +3,7 @@
 }
 
     <div class="jumbotron">
-        <img src="~/Images/houstonbanner.png" />
+       <img src="~/Images/houstonbanner.png" />
     </div>
 
 <div class="row">
@@ -17,11 +17,11 @@
     <div class="col-md-4">
         <h2>Register</h2>
         <p>Are you a tenant or a property manager? Register with us! </p>
-        <p><a class="btn btn-default" href="https://go.microsoft.com/fwlink/?LinkId=301866">Learn more &raquo;</a></p>
+        <p><a class="btn btn-default"  onclick="location.href='@Url.Action("Register")'">Register Here &raquo;</a></p>
     </div>
     <div class="col-md-4">
         <h2>Sign in</h2>
         <p>Already have an account? Sign in!</p>
-        <p><a class="btn btn-default" href="/Home/Login">Log in &raquo;</a></p>
+        <p><a class="btn btn-default"  onclick="location.href='@Url.Action("Login")'">Login Here &raquo;</a></p>
     </div>
 </div>
