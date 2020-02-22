@@ -139,8 +139,11 @@
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
     <Content Include="Images\buildingimages.jpg" />
+    <Content Include="Images\Com-logo.png" />
+    <Content Include="Images\complain logo.png" />
     <Content Include="Images\houstonbanner.png" />
     <Content Include="Images\MBM-Logo.png" />
+    <Content Include="Images\Profile-logo.png" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
     <None Include="Properties\PublishProfiles\maple-building-management20200215053058 - Web Deploy.pubxml" />
@@ -173,6 +176,7 @@
     <Content Include="Views\Home\ViewAccounts.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\FileComplaint.cshtml" />
+    <Content Include="Views\Home\ContentPage.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

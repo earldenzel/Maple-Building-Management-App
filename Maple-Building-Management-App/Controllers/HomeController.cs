@@ -145,7 +145,7 @@ namespace Maple_Building_Management_App.Controllers
 
                 if (matchingFound)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ContentPage");
                 }
                 else
                 {
@@ -158,6 +158,11 @@ namespace Maple_Building_Management_App.Controllers
                 ViewBag.ErrorMessage = "Login Failed";
                 return View();
             }
+        }
+
+        public ActionResult ContentPage()
+        {
+            return View();
         }
 
 
