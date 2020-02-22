@@ -78,8 +78,7 @@ namespace Maple_Building_Management_App.Controllers
 
             return View();
         }
-
-
+        
         [AllowAnonymous]
         public ActionResult Login()
         {
@@ -127,20 +126,34 @@ namespace Maple_Building_Management_App.Controllers
         //    }
         //}
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult Login(AccountModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        int recordsCreated = CreateAccount(
-        //            model.EmailAddress,
+        [HttpPost]
+        [AllowAnonymous]
+        [ValidateAntiForgeryToken]
+        public ActionResult Login(LoginModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                //bool matchingFound = SearchAccount(
+                //    model.EmailAddress,
+                //    model.Password
+                //    );
+                bool matchingFound = SearchAccount(
+                    model.EmailAddress,
+                    model.Password
+                    ).Count > 0;
 
-        //            );
-        //        return RedirectToAction("Index");
-        //    }
+                if (matchingFound)
+                {
+                    return RedirectToAction("Index");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Login Failed";
+                    return View();
+                }
+            }
 
-        //    return View();
-        //}
+            return View();
+        }
     }
 }

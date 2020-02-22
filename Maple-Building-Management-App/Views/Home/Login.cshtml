@@ -1,4 +1,4 @@
-﻿@model Maple_Building_Management_App.Models.AccountModel
+﻿@model Maple_Building_Management_App.Models.LoginModel
 
 @{
     ViewBag.Title = "Login Page";
@@ -33,8 +33,12 @@
         <div class="form-group">
             <div class="col-md-offset-2 col-md-10">
                 <input type="submit" value="Login" class="btn btn-default" />
+                <span class="text-danger">
+                    @ViewBag.ErrorMessage
+                </span>
             </div>
         </div>
+
     </div>
 }
 

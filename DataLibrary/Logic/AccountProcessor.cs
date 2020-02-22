@@ -34,10 +34,16 @@ namespace DataLibrary.Logic
             return SqlDataAccess.LoadData<AccountModel>(sql);
         }
 
-        //public static int Login()
-        //{
-        //    string sql = " from dbo.Account;";
-        //    return SqlDataAccess.Equals;
-        //}
+        //public static bool SearchAccount(string emailAddress, string password)
+        public static List<AccountModel> SearchAccount(string emailAddress, string password)
+        {
+            //string sql = "SELECT EmailAddress, Password from dbo.Account;";
+            string sql = "SELECT * from dbo.Account WHERE EmailAddress = '" + emailAddress + "' AND Password = '" + password + "';";
+            List<AccountModel> model = SqlDataAccess.LoadData<AccountModel>(sql);
+
+            //return (model.Find(m => m.EmailAddress == emailAddress).Password == password);
+            //return (model.Count > 0);
+            return model;
+        }
     }
 }
