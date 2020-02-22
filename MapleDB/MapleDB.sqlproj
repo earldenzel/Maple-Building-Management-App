@@ -66,4 +66,7 @@
   <ItemGroup>
     <None Include="PublishProfiles\MapleDB.publish.xml" />
   </ItemGroup>
+  <ItemGroup>
+    <RefactorLog Include="MapleDB.refactorlog" />
+  </ItemGroup>
 </Project>
