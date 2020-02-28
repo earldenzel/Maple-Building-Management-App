@@ -143,8 +143,6 @@ namespace Maple_Building_Management_App.Controllers
                 complaints.Add(new ComplaintModel
                 {
                     Id = row.Id,
-                    //ComplaintType = row.ComplaintTypeId.ToString(),
-                    //ComplaintStatus = row.ComplaintStatusId.ToString(),
                     ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
                     ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
                     Description = preview,
@@ -160,8 +158,8 @@ namespace Maple_Building_Management_App.Controllers
             var data = LoadComplaint(id).FirstOrDefault();
             ComplaintModel complaint = new ComplaintModel();
             complaint.Id = data.Id;
-            complaint.ComplaintType = data.ComplaintTypeId.ToString();
-            complaint.ComplaintStatus = data.ComplaintStatusId.ToString();
+            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
+            complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
             complaint.Description = data.Details;
             complaint.IncidentDate = data.IncidentDate;
 

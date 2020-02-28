@@ -52,7 +52,8 @@ namespace DataLibrary.Logic
 
         public static List<ComplaintModel> LoadComplaints()
         {
-            string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
+            //string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
+            string sql = "SELECT * from dbo.Complaint;";
             return SqlDataAccess.LoadData<ComplaintModel>(sql);
         }
 
