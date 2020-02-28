@@ -126,6 +126,47 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
+        public ActionResult ViewComplaints()
+        {
+            int preview_max = 15;
+            var data = LoadComplaints();
+            List<ComplaintModel> complaints = new List<ComplaintModel>();
+
+            foreach (var row in data)
+            {
+                string preview = row.Details.Substring(0, Math.Min(preview_max, row.Details.Length));
+                if (row.Details.Length > preview_max)
+                {
+                    preview += "...";
+                }
+
+                complaints.Add(new ComplaintModel
+                {
+                    Id = row.Id,
+                    //ComplaintType = row.ComplaintTypeId.ToString(),
+                    //ComplaintStatus = row.ComplaintStatusId.ToString(),
+                    ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
+                    ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
+                    Description = preview,
+                    IncidentDate = row.IncidentDate
+                });
+            }
+
+            return View(complaints);
+        }
+
+        public ActionResult ComplaintDetails(int id)
+        {
+            var data = LoadComplaint(id).FirstOrDefault();
+            ComplaintModel complaint = new ComplaintModel();
+            complaint.Id = data.Id;
+            complaint.ComplaintType = data.ComplaintTypeId.ToString();
+            complaint.ComplaintStatus = data.ComplaintStatusId.ToString();
+            complaint.Description = data.Details;
+            complaint.IncidentDate = data.IncidentDate;
+
+            return View(complaint);
+        }
 
         public ActionResult FileComplaint()
         {
@@ -153,6 +194,38 @@ namespace Maple_Building_Management_App.Controllers
                     model.Description,
                     (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
                     (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
+                );
+                return RedirectToAction("Index");
+            }
+
+            return View();
+        }
+
+        public ActionResult UpdateComplaint()
+        {
+            ComplaintModel model = new ComplaintModel();
+            model.ComplaintStatus = ComplaintStatus.Open.ToString();
+            ViewBag.Message = "Update Complaint";
+
+            Session["TenantID"] = 1;
+            Session["PropertyID"] = 2;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult UpdateComplaint(ComplaintModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int recordsCreated = CreateComplaint(
+                    (int)Session["TenantID"],
+                    (int)Session["PropertyID"],
+                    model.IncidentDate,
+                    model.Description,
+                    (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
+                    (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
                 );
                 return RedirectToAction("Index");
             }

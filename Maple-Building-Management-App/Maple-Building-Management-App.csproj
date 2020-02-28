@@ -177,6 +177,9 @@
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\FileComplaint.cshtml" />
     <Content Include="Views\Home\ContentPage.cshtml" />
+    <Content Include="Views\Home\UpdateComplaint.cshtml" />
+    <Content Include="Views\Home\ViewComplaints.cshtml" />
+    <Content Include="Views\Home\ComplaintDetails.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

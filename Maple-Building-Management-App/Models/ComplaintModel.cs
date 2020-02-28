@@ -9,6 +9,8 @@ namespace Maple_Building_Management_App.Models
 {
     public class ComplaintModel
     {
+        public int Id { get; set; }
+
         [Display(Name = "Type of Complaint")]
         [Required(ErrorMessage = "Complaint Type is required")]
         public string ComplaintType { get; set; }
