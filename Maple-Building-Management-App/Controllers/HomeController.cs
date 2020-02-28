@@ -143,8 +143,8 @@ namespace Maple_Building_Management_App.Controllers
                 complaints.Add(new ComplaintModel
                 {
                     Id = row.Id,
-                    ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
                     ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
+                    ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
                     Description = preview,
                     IncidentDate = row.IncidentDate
                 });
@@ -157,13 +157,47 @@ namespace Maple_Building_Management_App.Controllers
         {
             var data = LoadComplaint(id).FirstOrDefault();
             ComplaintModel complaint = new ComplaintModel();
+
             complaint.Id = data.Id;
-            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
             complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
+            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
             complaint.Description = data.Details;
             complaint.IncidentDate = data.IncidentDate;
 
             return View(complaint);
+        }
+
+        public ActionResult EditComplaint(int id)
+        {
+            var data = LoadComplaint(id).FirstOrDefault();
+            ComplaintModel complaint = new ComplaintModel();
+
+            complaint.Id = data.Id;
+            complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
+            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
+            complaint.Description = data.Details;
+            complaint.IncidentDate = data.IncidentDate;
+
+            return View(complaint);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditComplaint(ComplaintModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int recordsCreated = UpdateComplaint(
+                    model.Id,
+                    model.IncidentDate,
+                    model.Description,
+                    (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
+                    (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
+                );
+                return RedirectToAction("ViewComplaints");
+            }
+
+            return View();
         }
 
         public ActionResult FileComplaint()
@@ -193,39 +227,7 @@ namespace Maple_Building_Management_App.Controllers
                     (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
                     (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
                 );
-                return RedirectToAction("Index");
-            }
-
-            return View();
-        }
-
-        public ActionResult UpdateComplaint()
-        {
-            ComplaintModel model = new ComplaintModel();
-            model.ComplaintStatus = ComplaintStatus.Open.ToString();
-            ViewBag.Message = "Update Complaint";
-
-            Session["TenantID"] = 1;
-            Session["PropertyID"] = 2;
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult UpdateComplaint(ComplaintModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                int recordsCreated = CreateComplaint(
-                    (int)Session["TenantID"],
-                    (int)Session["PropertyID"],
-                    model.IncidentDate,
-                    model.Description,
-                    (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
-                    (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
-                );
-                return RedirectToAction("Index");
+                return RedirectToAction("ViewComplaints");
             }
 
             return View();

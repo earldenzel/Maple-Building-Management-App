@@ -12,10 +12,10 @@
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.ComplaintType)
+            @Html.DisplayNameFor(model => model.ComplaintStatus)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.ComplaintStatus)
+            @Html.DisplayNameFor(model => model.ComplaintType)
         </th>
         <th>
             @Html.DisplayNameFor(model => model.Description)
@@ -30,10 +30,10 @@
     {
         <tr>
             <td>
-                @Html.DisplayFor(modelItem => item.ComplaintType)
+                @Html.DisplayFor(modelItem => item.ComplaintStatus)
             </td>
             <td>
-                @Html.DisplayFor(modelItem => item.ComplaintStatus)
+                @Html.DisplayFor(modelItem => item.ComplaintType)
             </td>
             <td>
                 @Html.DisplayFor(modelItem => item.Description)
@@ -42,9 +42,9 @@
                 @Html.DisplayFor(modelItem => item.IncidentDate)
             </td>
             <td>
-                @Html.ActionLink("Edit", "Edit", new { id = item.Id }) |
+                @Html.ActionLink("Edit", "EditComplaint", new { id = item.Id }) |
                 @Html.ActionLink("Details", "ComplaintDetails", new { id = item.Id }) |
-                @Html.ActionLink("Delete", "Delete", new { id = item.Id })
+                @Html.ActionLink("Delete", "DeleteComplaint", new { id = item.Id })
             </td>
         </tr>
     }
