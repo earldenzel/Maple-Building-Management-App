@@ -32,6 +32,19 @@ namespace DataLibrary.Logic
             return SqlDataAccess.SaveData(sql, data);
         }
 
+        public static List<ComplaintModel> LoadComplaints()
+        {
+            //string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
+            string sql = "SELECT * FROM dbo.Complaint;";
+            return SqlDataAccess.LoadData<ComplaintModel>(sql);
+        }
+
+        public static List<ComplaintModel> LoadComplaint(int id)
+        {
+            string sql = "SELECT * FROM dbo.Complaint WHERE Id = '" + id + "';";
+            return SqlDataAccess.LoadData<ComplaintModel>(sql);
+        }
+
         public static int UpdateComplaint(int id,
                                           DateTime incidentDate,
                                           string details,
@@ -53,17 +66,10 @@ namespace DataLibrary.Logic
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        public static List<ComplaintModel> LoadComplaints()
+        public static int DeleteComplaintData(int id)
         {
-            //string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
-            string sql = "SELECT * FROM dbo.Complaint;";
-            return SqlDataAccess.LoadData<ComplaintModel>(sql);
-        }
-
-        public static List<ComplaintModel> LoadComplaint(int id)
-        {
-            string sql = "SELECT * FROM dbo.Complaint WHERE Id = '"+id+"';";
-            return SqlDataAccess.LoadData<ComplaintModel>(sql);
+            string sql = "DELETE FROM dbo.Complaint WHERE Id = '" + id + "';";
+            return SqlDataAccess.ExecuteQuery(sql);
         }
     }
 }

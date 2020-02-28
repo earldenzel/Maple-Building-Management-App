@@ -126,6 +126,39 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
+        public ActionResult FileComplaint()
+        {
+            ComplaintModel model = new ComplaintModel();
+            model.IncidentDate = DateTime.Today;
+            model.ComplaintStatus = ComplaintStatus.Open.ToString();
+            ViewBag.Message = "Create Complaint";
+
+            Session["TenantID"] = 1;
+            Session["PropertyID"] = 2;
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult FileComplaint(ComplaintModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int recordsCreated = CreateComplaint(
+                    (int)Session["TenantID"],
+                    (int)Session["PropertyID"],
+                    model.IncidentDate,
+                    model.Description,
+                    (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
+                    (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
+                );
+                return RedirectToAction("ViewComplaints");
+            }
+
+            return View();
+        }
+
         public ActionResult ViewComplaints()
         {
             int preview_max = 15;
@@ -187,7 +220,7 @@ namespace Maple_Building_Management_App.Controllers
         {
             if (ModelState.IsValid)
             {
-                int recordsCreated = UpdateComplaint(
+                int recordUpdated = UpdateComplaint(
                     model.Id,
                     model.IncidentDate,
                     model.Description,
@@ -200,37 +233,11 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
-        public ActionResult FileComplaint()
+        public ActionResult DeleteComplaint(int id)
         {
-            ComplaintModel model = new ComplaintModel();
-            model.IncidentDate = DateTime.Today;
-            model.ComplaintStatus = ComplaintStatus.Open.ToString();
-            ViewBag.Message = "Create Complaint";
+            int recordDeleted = DeleteComplaintData(id);
 
-            Session["TenantID"] = 1;
-            Session["PropertyID"] = 2;
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult FileComplaint(ComplaintModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                int recordsCreated = CreateComplaint(
-                    (int)Session["TenantID"],
-                    (int)Session["PropertyID"],
-                    model.IncidentDate,
-                    model.Description,
-                    (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
-                    (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
-                );
-                return RedirectToAction("ViewComplaints");
-            }
-
-            return View();
+            return RedirectToAction("ViewComplaints");
         }
     }
 }
