@@ -1,0 +1,11 @@
+﻿@{
+    ViewBag.Title = "Success!";
+}
+<h2>@ViewBag.Title</h2>
+<p class="text-success">@ViewBag.StatusMessage</p>
+<div>
+    <p>Phone Number added successfully! Two factor authentication is now automatically enabled!</p>
+</div>
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

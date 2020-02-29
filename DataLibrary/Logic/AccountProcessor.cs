@@ -45,5 +45,40 @@ namespace DataLibrary.Logic
             //return (model.Count > 0);
             return model;
         }
+
+        //public static bool SearchAccount(string emailAddress, string password)
+        public static AccountModel SearchAccount(int id)
+        {
+            //string sql = "SELECT EmailAddress, Password from dbo.Account;";
+            string sql = "SELECT * from dbo.Account WHERE Id = " + id + ";";
+            List<AccountModel> model = SqlDataAccess.LoadData<AccountModel>(sql);
+
+            //return (model.Find(m => m.EmailAddress == emailAddress).Password == password);
+            //return (model.Count > 0);
+            return model.First();
+        }
+
+        public static int UpdatePhoneNumber(int id, string phoneNumber)
+        {
+            string sql = @"UPDATE dbo.Account
+                            SET PhoneNumber = '" + phoneNumber + "', TwoFactor = 1 " +
+                            "WHERE Id = " + id + " ;";
+            return SqlDataAccess.UpdateData(sql);
+        }
+
+        public static int DeletePhoneNumber(int id)
+        {
+            string sql = @"UPDATE dbo.Account
+                            SET PhoneNumber = NULL, TwoFactor = 0 " +
+                            "WHERE Id = " + id + " ;";
+            return SqlDataAccess.UpdateData(sql);
+        }
+
+        public static int UpdateTwoFactor(int id, bool enableTwoFactor)
+        {
+            string sql = @"UPDATE dbo.Account
+                            SET TwoFactor = " + Convert.ToInt32(enableTwoFactor) + " WHERE Id = " + id + " ;";
+            return SqlDataAccess.UpdateData(sql);
+        }
     }
 }

@@ -15,5 +15,7 @@ namespace DataLibrary.Models
         public string Password { get; set; }
         public bool Tenant { get; set; }
         public string PropertyCode { get; set; }
+        public bool TwoFactor { get; set; }
+        public string PhoneNumber { get; set; }
     }
 }
