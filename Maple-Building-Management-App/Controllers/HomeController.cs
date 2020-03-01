@@ -80,7 +80,7 @@ namespace Maple_Building_Management_App.Controllers
                     model.Password,
                     model.Tenant, 
                     model.PropertyCode);
-                return RedirectToAction("Index");
+                return View("SuccessfulRegister", model);
             }
 
             return View();
@@ -140,7 +140,6 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
-
         public ActionResult FileComplaint()
         {
             ComplaintModel model = new ComplaintModel();
@@ -168,7 +167,8 @@ namespace Maple_Building_Management_App.Controllers
                     (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
                     (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
                 );
-                return RedirectToAction("Index");
+                //return View("SuccessfulComplaint", model);
+                return RedirectToAction("ViewComplaints");
             }
 
             return View();
@@ -199,6 +199,59 @@ namespace Maple_Building_Management_App.Controllers
             }
             return View();
 
+        public ActionResult ViewComplaints()
+        {
+            int preview_max = 15;
+            var data = LoadComplaints();
+            List<ComplaintModel> complaints = new List<ComplaintModel>();
+
+            foreach (var row in data)
+            {
+                string preview = row.Details.Substring(0, Math.Min(preview_max, row.Details.Length));
+                if (row.Details.Length > preview_max)
+                {
+                    preview += "...";
+                }
+
+                complaints.Add(new ComplaintModel
+                {
+                    Id = row.Id,
+                    ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
+                    ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
+                    Description = preview,
+                    IncidentDate = row.IncidentDate
+                });
+            }
+
+            return View(complaints);
+        }
+
+        public ActionResult ComplaintDetails(int id)
+        {
+            var data = LoadComplaint(id).FirstOrDefault();
+            ComplaintModel complaint = new ComplaintModel();
+
+            complaint.Id = data.Id;
+            complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
+            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
+            complaint.Description = data.Details;
+            complaint.IncidentDate = data.IncidentDate;
+
+            return View(complaint);
+        }
+
+        public ActionResult EditComplaint(int id)
+        {
+            var data = LoadComplaint(id).FirstOrDefault();
+            ComplaintModel complaint = new ComplaintModel();
+
+            complaint.Id = data.Id;
+            complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
+            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
+            complaint.Description = data.Details;
+            complaint.IncidentDate = data.IncidentDate;
+
+            return View(complaint);
         }
 
         [HttpPost]
@@ -232,6 +285,32 @@ namespace Maple_Building_Management_App.Controllers
         {
             Session.Remove("User");
             return RedirectToAction("Index");
+        }
+        
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditComplaint(ComplaintModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int recordUpdated = UpdateComplaint(
+                    model.Id,
+                    model.IncidentDate,
+                    model.Description,
+                    (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
+                    (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
+                );
+                return RedirectToAction("ViewComplaints");
+            }
+
+            return View();
+        }
+
+        public ActionResult DeleteComplaint(int id)
+        {
+            int recordDeleted = DeleteComplaintData(id);
+
+            return RedirectToAction("ViewComplaints");
         }
     }
 }

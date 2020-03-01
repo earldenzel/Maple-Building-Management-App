@@ -33,7 +33,17 @@ namespace DataLibrary.DataAccess
             }
 
         }
+      
         public static int UpdateData(string sql)
+        {
+            using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
+            {
+                return cnn.Execute(sql);
+            }
+
+        }
+
+        public static int ExecuteQuery(string sql)
         {
             using (IDbConnection cnn = new SqlConnection(GetConnectionString()))
             {
