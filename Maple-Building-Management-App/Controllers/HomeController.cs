@@ -198,6 +198,7 @@ namespace Maple_Building_Management_App.Controllers
                 Session["SentMessageLogin"] = message.Sid;
             }
             return View();
+        }
 
         public ActionResult ViewComplaints()
         {
