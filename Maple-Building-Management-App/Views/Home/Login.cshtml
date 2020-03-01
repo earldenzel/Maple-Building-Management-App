@@ -4,6 +4,8 @@
     ViewBag.Title = "Login Page";
 }
 
+<h2>Login</h2>
+
 @using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
@@ -50,21 +52,4 @@
     @Scripts.Render("~/bundles/jqueryval")
 }
 
-
-@*<div class="container">
-    <form>
-        <h2>Login Here</h2>
-        <div class="form-group">
-            <label asp-for="UserName" class="control-label col-sm-3">User Name:</label>
-            <input class="form-control" asp-for="UserName" />
-        </div>
-        <div class="form-group">
-            <label asp-for="password" class="control-label col-sm-3">Password</label>
-            <input class="form-control" asp-for="password" />
-        </div>
-        <div class=" form-group">
-                <button class="btn btn-lg btn-block btn-primary" onclick="location.href='@Url.Action("MainPage")'">Login</button>
-            </div>
-    </form>
-</div>*@
 

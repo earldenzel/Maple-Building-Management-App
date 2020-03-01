@@ -88,45 +88,6 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
-        //[HttpPost]
-        //[AllowAnonymous]
-        //[ValidateAntiForgeryToken]
-        //public async Task<ActionResult> Login(AccountModel model, string returnUrl)
-        //{
-        //    if (!ModelState.IsValid)
-        //    {
-        //        return View(model);
-        //    }
-
-        //    // Require the user to have a confirmed email before they can log on.
-        //    var user = await UserManager.FindByNameAsync(model.EmailAddress);
-        //    if (user != null)
-        //    {
-        //        if (!await UserManager.IsEmailConfirmedAsync(user.Id))
-        //        {
-        //            ViewBag.errorMessage = "You must have a confirmed email to log on.";
-        //            return View("Error");
-        //        }
-        //    }
-
-        //    // This doesn't count login failures towards account lockout
-        //    // To enable password failures to trigger account lockout, change to shouldLockout: true
-        //    var result = await SignInManager.PasswordSignInAsync(model.EmailAddress, model.Password, shouldLockout: false);
-        //    switch (result)
-        //    {
-        //        case SignInStatus.Success:
-        //            return RedirectToLocal(returnUrl);
-        //        case SignInStatus.LockedOut:
-        //            return View("Lockout");
-        //        case SignInStatus.RequiresVerification:
-        //            return RedirectToAction("SendCode", new { ReturnUrl = returnUrl, RememberMe = model.RememberMe });
-        //        case SignInStatus.Failure:
-        //        default:
-        //            ModelState.AddModelError("", "Invalid login attempt.");
-        //            return View(model);
-        //    }
-        //}
-
         [HttpPost]
         [AllowAnonymous]
         [ValidateAntiForgeryToken]
@@ -145,7 +106,7 @@ namespace Maple_Building_Management_App.Controllers
 
                 if (matchingFound)
                 {
-                    return RedirectToAction("Index");
+                    return RedirectToAction("ContentPage");
                 }
                 else
                 {
@@ -160,6 +121,10 @@ namespace Maple_Building_Management_App.Controllers
             }
         }
 
+        public ActionResult ContentPage()
+        {
+            return View();
+        }
 
         public ActionResult FileComplaint()
         {
@@ -188,10 +153,92 @@ namespace Maple_Building_Management_App.Controllers
                     (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
                     (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
                 );
-                return View("SuccessfulComplaint", model);
+                //return View("SuccessfulComplaint", model);
+                return RedirectToAction("ViewComplaints");
             }
 
             return View();
+        }
+
+        public ActionResult ViewComplaints()
+        {
+            int preview_max = 15;
+            var data = LoadComplaints();
+            List<ComplaintModel> complaints = new List<ComplaintModel>();
+
+            foreach (var row in data)
+            {
+                string preview = row.Details.Substring(0, Math.Min(preview_max, row.Details.Length));
+                if (row.Details.Length > preview_max)
+                {
+                    preview += "...";
+                }
+
+                complaints.Add(new ComplaintModel
+                {
+                    Id = row.Id,
+                    ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
+                    ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
+                    Description = preview,
+                    IncidentDate = row.IncidentDate
+                });
+            }
+
+            return View(complaints);
+        }
+
+        public ActionResult ComplaintDetails(int id)
+        {
+            var data = LoadComplaint(id).FirstOrDefault();
+            ComplaintModel complaint = new ComplaintModel();
+
+            complaint.Id = data.Id;
+            complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
+            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
+            complaint.Description = data.Details;
+            complaint.IncidentDate = data.IncidentDate;
+
+            return View(complaint);
+        }
+
+        public ActionResult EditComplaint(int id)
+        {
+            var data = LoadComplaint(id).FirstOrDefault();
+            ComplaintModel complaint = new ComplaintModel();
+
+            complaint.Id = data.Id;
+            complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
+            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
+            complaint.Description = data.Details;
+            complaint.IncidentDate = data.IncidentDate;
+
+            return View(complaint);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult EditComplaint(ComplaintModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                int recordUpdated = UpdateComplaint(
+                    model.Id,
+                    model.IncidentDate,
+                    model.Description,
+                    (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
+                    (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
+                );
+                return RedirectToAction("ViewComplaints");
+            }
+
+            return View();
+        }
+
+        public ActionResult DeleteComplaint(int id)
+        {
+            int recordDeleted = DeleteComplaintData(id);
+
+            return RedirectToAction("ViewComplaints");
         }
     }
 }
