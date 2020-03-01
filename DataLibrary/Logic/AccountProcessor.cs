@@ -34,27 +34,28 @@ namespace DataLibrary.Logic
             return SqlDataAccess.LoadData<AccountModel>(sql);
         }
 
-        //public static bool SearchAccount(string emailAddress, string password)
         public static List<AccountModel> SearchAccount(string emailAddress, string password)
         {
-            //string sql = "SELECT EmailAddress, Password from dbo.Account;";
             string sql = "SELECT * from dbo.Account WHERE EmailAddress = '" + emailAddress + "' AND Password = '" + password + "';";
             List<AccountModel> model = SqlDataAccess.LoadData<AccountModel>(sql);
-
-            //return (model.Find(m => m.EmailAddress == emailAddress).Password == password);
-            //return (model.Count > 0);
             return model;
         }
 
-        //public static bool SearchAccount(string emailAddress, string password)
         public static AccountModel SearchAccount(int id)
         {
-            //string sql = "SELECT EmailAddress, Password from dbo.Account;";
             string sql = "SELECT * from dbo.Account WHERE Id = " + id + ";";
             List<AccountModel> model = SqlDataAccess.LoadData<AccountModel>(sql);
+            return model.First();
+        }
 
-            //return (model.Find(m => m.EmailAddress == emailAddress).Password == password);
-            //return (model.Count > 0);
+        public static AccountModel SearchAccount(string email)
+        {
+            string sql = "SELECT * from dbo.Account WHERE EmailAddress = '" + email + "';";
+            List<AccountModel> model = SqlDataAccess.LoadData<AccountModel>(sql);
+            if (model.Count == 0)
+            {
+                return null;
+            }
             return model.First();
         }
 
@@ -78,6 +79,13 @@ namespace DataLibrary.Logic
         {
             string sql = @"UPDATE dbo.Account
                             SET TwoFactor = " + Convert.ToInt32(enableTwoFactor) + " WHERE Id = " + id + " ;";
+            return SqlDataAccess.UpdateData(sql);
+        }
+
+        public static int UpdatePassword(int id, string newPassword)
+        {
+            string sql = @"UPDATE dbo.Account
+                            SET Password = '" + newPassword + "' WHERE Id = " + id + " ;";
             return SqlDataAccess.UpdateData(sql);
         }
     }

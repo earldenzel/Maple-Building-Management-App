@@ -167,8 +167,7 @@ namespace Maple_Building_Management_App.Controllers
                     (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
                     (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
                 );
-                //return View("SuccessfulComplaint", model);
-                return RedirectToAction("ViewComplaints");
+                return View("SuccessfulComplaint", model);
             }
 
             return View();
