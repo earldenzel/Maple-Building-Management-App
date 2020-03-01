@@ -152,5 +152,35 @@ namespace Maple_Building_Management_App.Controllers
             Session.Remove("SentMessage");
             return View();
         }
+
+        public ActionResult ChangePassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ChangePassword(ChangePasswordModel model)
+        {
+            string oldPassword = ((AccountModel)Session["User"]).Password;
+            int id = ((AccountModel)Session["User"]).Id;
+            if (ModelState.IsValid)
+            {
+                if (!string.Equals(oldPassword, model.Password))
+                {
+                    ViewBag.ErrorMessage = "Old password is not correct";
+                    return View(model);
+                }
+                else
+                {
+                    int recordUpdated = UpdatePassword(
+                        id,
+                        model.NewPassword
+                    );
+
+                }
+            }
+            return View(model);
+        }
     }
 }

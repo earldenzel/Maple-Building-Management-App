@@ -155,6 +155,8 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountModel.cs" />
+    <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\ForgotPasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ComplaintModel.cs" />
     <Compile Include="Models\ComplaintStatus.cs" />
@@ -224,6 +226,7 @@
     <Content Include="Views\Home\ViewComplaints.cshtml" />
     <Content Include="Views\Home\ComplaintDetails.cshtml" />
     <Content Include="Views\Home\EditComplaint.cshtml" />
+    <Content Include="Views\Manage\ChangePassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
