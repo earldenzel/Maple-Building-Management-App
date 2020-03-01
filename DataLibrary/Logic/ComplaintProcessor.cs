@@ -13,9 +13,9 @@ namespace DataLibrary.Logic
         public static int CreateComplaint(int tenantId, 
                                           int propertyManagerId, 
                                           DateTime incidentDate, 
-                                          string details, 
-                                          int complaintTypeId, 
-                                          int complaintStatusId)
+                                          string details,
+                                          int complaintStatusId,
+                                          int complaintTypeId)
         {
             ComplaintModel data = new ComplaintModel
             {
@@ -31,35 +31,45 @@ namespace DataLibrary.Logic
                                VALUES (@TenantId, @PropertyManagerId, @IncidentDate, @Details, @ComplaintStatusId, @ComplaintTypeId);";
             return SqlDataAccess.SaveData(sql, data);
         }
-        public static int UpdateComplaint(
+
+        public static List<ComplaintModel> LoadComplaints()
+        {
+            //string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
+            string sql = "SELECT * FROM dbo.Complaint;";
+            return SqlDataAccess.LoadData<ComplaintModel>(sql);
+        }
+
+        public static List<ComplaintModel> LoadComplaint(int id)
+        {
+            string sql = "SELECT * FROM dbo.Complaint WHERE Id = '" + id + "';";
+            return SqlDataAccess.LoadData<ComplaintModel>(sql);
+        }
+
+        public static int UpdateComplaint(int id,
                                           DateTime incidentDate,
                                           string details,
-                                          int complaintTypeId,
-                                          int complaintStatusId)
+                                          int complaintStatusId,
+                                          int complaintTypeId)
         {
             ComplaintModel data = new ComplaintModel
             {
+                Id = id,
                 IncidentDate = incidentDate,
                 Details = details,
                 ComplaintStatusId = complaintStatusId,
                 ComplaintTypeId = complaintTypeId
             };
 
-            string sql = @"UPDATE dbo.Complaint (IncidentDate, Details, ComplaintStatusId, ComplaintTypeId)
-                               VALUES (@IncidentDate, @Details, @ComplaintStatusId, @ComplaintTypeId);";
+            string sql = @"UPDATE dbo.Complaint SET IncidentDate = @IncidentDate, Details = @Details, 
+                               ComplaintStatusId = @ComplaintStatusId, ComplaintTypeId = @ComplaintTypeId
+                               WHERE Id = @Id;";
             return SqlDataAccess.SaveData(sql, data);
         }
 
-        public static List<ComplaintModel> LoadComplaints()
+        public static int DeleteComplaintData(int id)
         {
-            string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
-            return SqlDataAccess.LoadData<ComplaintModel>(sql);
-        }
-
-        public static List<ComplaintModel> LoadComplaint(int id)
-        {
-            string sql = "SELECT * from dbo.Complaint WHERE Id = '"+id+"';";
-            return SqlDataAccess.LoadData<ComplaintModel>(sql);
+            string sql = "DELETE FROM dbo.Complaint WHERE Id = '" + id + "';";
+            return SqlDataAccess.ExecuteQuery(sql);
         }
     }
 }
