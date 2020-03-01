@@ -8,10 +8,16 @@ using DataLibrary;
 using static DataLibrary.Logic.AccountProcessor;
 using System.Threading.Tasks;
 using static DataLibrary.Logic.ComplaintProcessor;
+using System.Configuration;
+using Twilio;
+using Twilio.Rest.Api.V2010.Account;
+using Twilio.Types;
+using Twilio.TwiML;
+using Twilio.AspNet.Mvc;
 
 namespace Maple_Building_Management_App.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : TwilioController
     {
         public ActionResult Index()
         {
@@ -95,18 +101,26 @@ namespace Maple_Building_Management_App.Controllers
         {
             if (ModelState.IsValid)
             {
-                //bool matchingFound = SearchAccount(
-                //    model.EmailAddress,
-                //    model.Password
-                //    );
-                bool matchingFound = SearchAccount(
+                List<DataLibrary.Models.AccountModel> accountModel = SearchAccount(
                     model.EmailAddress,
                     model.Password
-                    ).Count > 0;
+                    );
+                bool matchingFound = accountModel.Count > 0;
 
                 if (matchingFound)
                 {
-                    return RedirectToAction("ContentPage");
+                    DataLibrary.Models.AccountModel dbModel = accountModel.First();
+                    if (dbModel.TwoFactor)
+                    {
+                        Session["UserID"] = dbModel.Id;
+                        Session["Phone"] = dbModel.PhoneNumber;
+                        return RedirectToAction("VerifyAccount");
+                    }
+                    else
+                    {
+                        Session["User"] = dbModel;
+                        return RedirectToAction("ContentPage");
+                    }
                 }
                 else
                 {
@@ -159,6 +173,31 @@ namespace Maple_Building_Management_App.Controllers
 
             return View();
         }
+
+        public ActionResult VerifyAccount()
+        {
+            if (Session["SentMessageLogin"] == null || Session["ExpectedCodeLogin"] == null)
+            {
+                var accountSid = ConfigurationManager.AppSettings["SMSAccountIdentification"];
+                var authToken = ConfigurationManager.AppSettings["SMSAccountPassword"];
+                TwilioClient.Init(accountSid, authToken);
+
+
+                var to = new PhoneNumber(Session["Phone"].ToString());
+                var from = new PhoneNumber(ConfigurationManager.AppSettings["SMSAccountFrom"]);
+
+                Random generator = new Random();
+                string r = generator.Next(0, 999999).ToString("D6");
+                Session["ExpectedCodeLogin"] = r;
+
+                var message = MessageResource.Create(
+                    to: to,
+                    from: from,
+                    body: "Your verification code for the Maple Building Management App is " + r);
+
+                Session["SentMessageLogin"] = message.Sid;
+            }
+            return View();
 
         public ActionResult ViewComplaints()
         {
@@ -215,6 +254,39 @@ namespace Maple_Building_Management_App.Controllers
             return View(complaint);
         }
 
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult VerifyAccount(VerifyModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                if (Session["SentMessageLogin"] == null || Session["ExpectedCodeLogin"] == null)
+                {
+                    TempData["Error"] = "Message has timed out. Please try to log in again";
+                    return RedirectToAction("Index");
+                }
+                else if (string.Equals(model.VerificationCode, Session["ExpectedCodeLogin"].ToString()))
+                {
+                    Session["User"] = SearchAccount((int)Session["UserID"]);
+                    Session.Remove("UserID");
+                    Session.Remove("SentMessageLogin");
+                    Session.Remove("ExpectedCodeLogin");
+                    return RedirectToAction("ContentPage");
+                }
+                else
+                {
+                    ViewBag.ErrorMessage = "Please input the correct verification code!";
+                }
+            }
+            return View();
+        }
+
+        public ActionResult Logout()
+        {
+            Session.Remove("User");
+            return RedirectToAction("Index");
+        }
+        
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult EditComplaint(ComplaintModel model)

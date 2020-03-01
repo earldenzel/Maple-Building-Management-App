@@ -67,7 +67,4 @@
   <ItemGroup>
     <PostDeploy Include="dbo\Tables\Script.PostDeployment1.sql" />
   </ItemGroup>
-  <ItemGroup>
-    <None Include="MapleDB.refactorlog" />
-  </ItemGroup>
 </Project>

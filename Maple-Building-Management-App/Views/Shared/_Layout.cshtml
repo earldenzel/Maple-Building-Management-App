@@ -10,25 +10,36 @@
 <body>
     <div class="navbar navbar-inverse navbar-fixed-top">
         <div class="container">
-            <img src="~/Images/MBM-Logo.png" />
             <div class="navbar-header">
+                <img src="~/Images/MBM-Logo.png" />
                 <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                @*@Html.ActionLink("Maple Building Management", "Index", "Home", new { area = "" }, new { @class = "navbar-brand" })*@
             </div>
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    <li>@Html.ActionLink("Register", "Register", "Home")</li>
-                    <li>@Html.ActionLink("Login", "Login", "Home")</li>
-                    <li>@Html.ActionLink("View Accounts", "ViewAccounts", "Home")</li>
-                    <li>@Html.ActionLink("View Complaints", "ViewComplaints", "Home")</li>
-                    <li>@Html.ActionLink("File Complaint", "FileComplaint", "Home")</li>
+                    [
+                    @if (Session["User"] == null)
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    }
+                    ]
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    [
+                    @if (Session["User"] != null)
+                    {
+                        <li>@Html.ActionLink("Manage", "Index", "Manage")</li>
+                        <li>@Html.ActionLink("View Accounts", "ViewAccounts", "Home")</li>
+                        <li>@Html.ActionLink("File Complaint", "FileComplaint", "Home")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+
+                    }
+                    ]
                 </ul>
             </div>
         </div>

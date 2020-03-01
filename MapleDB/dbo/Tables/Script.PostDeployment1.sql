@@ -10,7 +10,12 @@ Post-Deployment Script Template
 --------------------------------------------------------------------------------------
 */
 
-INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (1, 'Emergency');
-INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (2, 'Pests');
-INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (3, 'Maintenance');
-INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (4, 'Noise');
+BEGIN
+   IF NOT EXISTS (SELECT * FROM [dbo].[ComplaintType])
+   BEGIN
+	INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (1, 'Emergency');
+	INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (2, 'Pests');
+	INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (3, 'Maintenance');
+	INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (4, 'Noise');
+   END
+END
