@@ -14,6 +14,9 @@ using Twilio.Types;
 using Twilio.TwiML;
 using Twilio.AspNet.Mvc;
 using static DataLibrary.Logic.AccountProcessor;
+using System.Net.Mail;
+using System.Net;
+using System.Text;
 
 namespace Maple_Building_Management_App.Controllers
 {
@@ -181,6 +184,91 @@ namespace Maple_Building_Management_App.Controllers
                 }
             }
             return View(model);
+        }
+
+        public ActionResult SuccessChangePassword()
+        {
+            return View();
+        }
+
+        public ActionResult ForgotPassword()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult ForgotPassword(ForgotPasswordModel model)
+        {
+            try
+            {
+                if (ModelState.IsValid)
+                {
+                    AccountModel account = SearchAccount(model.EmailAddress);
+                    
+                    if (account == null)
+                    {
+                        ViewBag.ErrorMessage = "This email does not have a Maple Building Management account associated with it!";
+                        return View();
+                    }
+
+                    var senderEmail = new MailAddress("propertymbm@gmail.com");
+                    var receiverEmail = new MailAddress(model.EmailAddress);
+                    var password = "mapleB@1";
+                    string randomString = RandomString(8, true);
+                    var sub = "Password reset information for Maple Building Management App";
+                    var body = "Good day, " + account.FirstName + "!\n\nYour new password for the Maple Building Management App is " + randomString + "\n\nSincerely,\n\nMaple Building Management Admin";
+                    var smtp = new SmtpClient
+                    {
+                        Host = "smtp.gmail.com",
+                        Port = 587,
+                        EnableSsl = true,
+                        DeliveryMethod = SmtpDeliveryMethod.Network,
+                        UseDefaultCredentials = false,
+                        Credentials = new NetworkCredential(senderEmail.Address, password)
+                    };
+                    using (var mess = new MailMessage(senderEmail, receiverEmail)
+                    {
+                        Subject = sub,
+                        Body = body
+                    })
+                    {
+                        smtp.Send(mess);
+                    }
+
+                    int recordUpdated = UpdatePassword(
+                        account.Id,
+                        randomString
+                    );
+
+                    return RedirectToAction("SuccessForgotPassword");
+                }
+            }
+            catch (Exception)
+            {
+                ViewBag.ErrorMessage = "There seems to be an error with the email messaging system";
+            }
+            return View();
+        }
+
+        public ActionResult SuccessForgotPassword()
+        {
+            return View();
+        }
+
+        public string RandomString(int size, bool lowerCase)
+        {
+            StringBuilder builder = new StringBuilder();
+            Random random = new Random();
+            char ch;
+            for (int i = 0; i < size; i++)
+            {
+                ch = Convert.ToChar(Convert.ToInt32(Math.Floor(26 * random.NextDouble() + 65)));
+                builder.Append(ch);
+            }
+            if (lowerCase)
+                return builder.ToString().ToLower();
+            return builder.ToString();
         }
     }
 }

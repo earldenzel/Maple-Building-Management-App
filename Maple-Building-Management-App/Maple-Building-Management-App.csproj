@@ -227,6 +227,9 @@
     <Content Include="Views\Home\ComplaintDetails.cshtml" />
     <Content Include="Views\Home\EditComplaint.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
+    <Content Include="Views\Manage\ForgotPassword.cshtml" />
+    <Content Include="Views\Manage\SuccessChangePassword.cshtml" />
+    <Content Include="Views\Manage\SuccessForgotPassword.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

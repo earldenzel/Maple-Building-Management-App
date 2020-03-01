@@ -48,6 +48,17 @@ namespace DataLibrary.Logic
             return model.First();
         }
 
+        public static AccountModel SearchAccount(string email)
+        {
+            string sql = "SELECT * from dbo.Account WHERE EmailAddress = '" + email + "';";
+            List<AccountModel> model = SqlDataAccess.LoadData<AccountModel>(sql);
+            if (model.Count == 0)
+            {
+                return null;
+            }
+            return model.First();
+        }
+
         public static int UpdatePhoneNumber(int id, string phoneNumber)
         {
             string sql = @"UPDATE dbo.Account

@@ -10,7 +10,7 @@ namespace Maple_Building_Management_App.Models
     {
         [DataType(DataType.EmailAddress)]
         [Display(Name = "Email Address")]
-        [Required(ErrorMessage = "Your email address is required.")]
+        [Required(ErrorMessage = "An email address is required.")]
         public string EmailAddress { get; set; }
     }
 }
