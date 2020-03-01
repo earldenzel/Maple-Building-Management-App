@@ -74,7 +74,7 @@ namespace Maple_Building_Management_App.Controllers
                     model.Password,
                     model.Tenant, 
                     model.PropertyCode);
-                return RedirectToAction("Index");
+                return View("SuccessfulRegister", model);
             }
 
             return View();
@@ -153,6 +153,7 @@ namespace Maple_Building_Management_App.Controllers
                     (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
                     (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
                 );
+                //return View("SuccessfulComplaint", model);
                 return RedirectToAction("ViewComplaints");
             }
 

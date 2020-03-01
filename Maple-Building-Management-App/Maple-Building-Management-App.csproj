@@ -138,6 +138,7 @@
     <Content Include="fonts\glyphicons-halflings-regular.svg" />
     <Content Include="Global.asax" />
     <Content Include="Content\Site.css" />
+    <Content Include="Images\about.jpg" />
     <Content Include="Images\buildingimages.jpg" />
     <Content Include="Images\Com-logo.png" />
     <Content Include="Images\complain logo.png" />
@@ -176,6 +177,8 @@
     <Content Include="Views\Home\ViewAccounts.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
     <Content Include="Views\Home\FileComplaint.cshtml" />
+    <Content Include="Views\Home\SuccessfulComplaint.cshtml" />
+    <Content Include="Views\Home\SuccessfulRegister.cshtml" />
     <Content Include="Views\Home\ContentPage.cshtml" />
     <Content Include="Views\Home\UpdateComplaint.cshtml" />
     <Content Include="Views\Home\ViewComplaints.cshtml" />
