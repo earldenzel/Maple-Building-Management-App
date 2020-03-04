@@ -6,39 +6,50 @@
     <title>@ViewBag.Title - My ASP.NET Application</title>
     @Styles.Render("~/Content/css")
     @Scripts.Render("~/bundles/modernizr")
-    <link href="~/Content/Site.css" rel="stylesheet" />
 </head>
 <body>
-    <div class="text-center">
-        <img src="~/Images/MBM-Logo2.png" />
+    <div class="navbar navbar-inverse navbar-fixed-top">
+        <div class="container">
+            <div class="navbar-header">
+                <img src="~/Images/MBM-Logo.png" />
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse">
+                <ul class="nav navbar-nav">
+                    <li>@Html.ActionLink("Home", "Index", "Home")</li>
+                    [
+                    @if (Session["User"] == null)
+                    {
+                        <li>@Html.ActionLink("Register", "Register", "Home")</li>
+                        <li>@Html.ActionLink("Login", "Login", "Home")</li>
+                    }
+                    ]
+                    <li>@Html.ActionLink("About", "About", "Home")</li>
+                    <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
+                    [
+                    @if (Session["User"] != null)
+                    {
+                        <li>@Html.ActionLink("Manage", "Index", "Manage")</li>
+                        <li>@Html.ActionLink("View Accounts", "ViewAccounts", "Home")</li>
+                        <li>@Html.ActionLink("File Complaint", "FileComplaint", "Home")</li>
+                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
+
+                    }
+                    ]
+                </ul>
+            </div>
+        </div>
     </div>
-    <br />
-    <div class="text-center">
-        <a class="btn btn-primary" @Html.ActionLink("Home", "Index", "Home")</a>
-        <a class="btn btn-primary" @Html.ActionLink("About", "About", "Home")</a>
-        <a class="btn btn-primary" @Html.ActionLink("Contact", "Contact", "Home")</a>
-
-        <a class="btn btn-primary" @Html.ActionLink("Register", "Register", "Home")</a>
-
-        @if (!User.Identity.IsAuthenticated)
-        {
-            <a class="btn btn-primary" @Html.ActionLink("Login", "Login", "Home")></a>
-        }
-        else
-        {
-            <a class="btn btn-primary" @Html.ActionLink("Logout", "Logout", "Home")> @User.Identity.Name</a>
-        }
-    </div>
-    <br />
-
-    <div class="text-center">
+    <div class="container body-content">
         @RenderBody()
-    </div>
-    <div class="text-center">
+        <hr />
         <footer>
             <p>&copy; @DateTime.Now.Year - Maple Building Management Application</p>
         </footer>
-
     </div>
 
     @Scripts.Render("~/bundles/jquery")
