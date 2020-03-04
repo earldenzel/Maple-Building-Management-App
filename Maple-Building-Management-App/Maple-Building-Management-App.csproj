@@ -149,6 +149,7 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ComplaintController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Global.asax.cs">
@@ -212,8 +213,8 @@
     <Content Include="Views\Home\Register.cshtml" />
     <Content Include="Views\Home\ViewAccounts.cshtml" />
     <Content Include="Views\Home\Login.cshtml" />
-    <Content Include="Views\Home\FileComplaint.cshtml" />
-    <Content Include="Views\Home\SuccessfulComplaint.cshtml" />
+    <Content Include="Views\Complaint\FileComplaint.cshtml" />
+    <Content Include="Views\Complaint\SuccessfulComplaint.cshtml" />
     <Content Include="Views\Home\SuccessfulRegister.cshtml" />
     <Content Include="Views\Home\ContentPage.cshtml" />
     <Content Include="Views\Manage\Index.cshtml" />
@@ -223,9 +224,9 @@
     <Content Include="Views\Manage\SuccessPhoneNumber.cshtml" />
     <Content Include="Views\Home\VerifyAccount.cshtml" />
     <Content Include="Views\Home\UpdateComplaint.cshtml" />
-    <Content Include="Views\Home\ViewComplaints.cshtml" />
-    <Content Include="Views\Home\ComplaintDetails.cshtml" />
-    <Content Include="Views\Home\EditComplaint.cshtml" />
+    <Content Include="Views\Complaint\ViewComplaints.cshtml" />
+    <Content Include="Views\Complaint\ComplaintDetails.cshtml" />
+    <Content Include="Views\Complaint\EditComplaint.cshtml" />
     <Content Include="Views\Manage\ChangePassword.cshtml" />
     <Content Include="Views\Manage\ForgotPassword.cshtml" />
     <Content Include="Views\Manage\SuccessChangePassword.cshtml" />

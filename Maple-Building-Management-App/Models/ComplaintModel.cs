@@ -29,5 +29,10 @@ namespace Maple_Building_Management_App.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString = "{0:yyyy-MM-dd}", ApplyFormatInEditMode = true)]
         public DateTime IncidentDate { get; set; } = DateTime.Now;
+        
+        [Display(Name = "Feedback")]
+        [StringLength(2000, ErrorMessage = "Please give a feedback of the complaint (maximum 2000 letters)")]
+        [DataType(DataType.MultilineText)]
+        public string Feedback { get; set; }
     }
 }

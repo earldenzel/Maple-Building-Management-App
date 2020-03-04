@@ -7,5 +7,6 @@
     [ReportedDate] DATETIME NOT NULL DEFAULT SYSDATETIME(), 
     [Details] VARCHAR(MAX) NULL, 
     [TenantId] INT NOT NULL, 
-    [PropertyManagerId] INT NOT NULL
+    [PropertyManagerId] INT NOT NULL, 
+    [Feedback] VARCHAR(MAX) NULL
 )

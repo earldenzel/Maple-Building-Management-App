@@ -16,5 +16,6 @@ namespace DataLibrary.Models
         public string Details { get; set; }
         public int ComplaintTypeId { get; set; }
         public int ComplaintStatusId { get; set; }
+        public string Feedback { get; set; }
     }
 }
