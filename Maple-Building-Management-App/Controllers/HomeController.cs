@@ -7,7 +7,6 @@ using Maple_Building_Management_App.Models;
 using DataLibrary;
 using static DataLibrary.Logic.AccountProcessor;
 using System.Threading.Tasks;
-using static DataLibrary.Logic.ComplaintProcessor;
 using System.Configuration;
 using Twilio;
 using Twilio.Rest.Api.V2010.Account;
@@ -119,6 +118,7 @@ namespace Maple_Building_Management_App.Controllers
                     else
                     {
                         Session["User"] = dbModel;
+                        Session["UserID"] = dbModel.Id;
                         return RedirectToAction("ContentPage");
                     }
                 }
@@ -137,39 +137,6 @@ namespace Maple_Building_Management_App.Controllers
 
         public ActionResult ContentPage()
         {
-            return View();
-        }
-
-        public ActionResult FileComplaint()
-        {
-            ComplaintModel model = new ComplaintModel();
-            model.IncidentDate = DateTime.Today;
-            model.ComplaintStatus = ComplaintStatus.Open.ToString();
-            ViewBag.Message = "Create Complaint";
-
-            Session["TenantID"] = 1;
-            Session["PropertyID"] = 2;
-
-            return View(model);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult FileComplaint(ComplaintModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                int recordsCreated = CreateComplaint(
-                    (int)Session["TenantID"],
-                    (int)Session["PropertyID"],
-                    model.IncidentDate,
-                    model.Description,
-                    (int) Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
-                    (int) Enum.Parse(typeof(ComplaintType), model.ComplaintType)
-                );
-                return View("SuccessfulComplaint", model);
-            }
-
             return View();
         }
 
@@ -197,61 +164,6 @@ namespace Maple_Building_Management_App.Controllers
                 Session["SentMessageLogin"] = message.Sid;
             }
             return View();
-        }
-
-        public ActionResult ViewComplaints()
-        {
-            int preview_max = 15;
-            var data = LoadComplaints();
-            List<ComplaintModel> complaints = new List<ComplaintModel>();
-
-            foreach (var row in data)
-            {
-                string preview = row.Details.Substring(0, Math.Min(preview_max, row.Details.Length));
-                if (row.Details.Length > preview_max)
-                {
-                    preview += "...";
-                }
-
-                complaints.Add(new ComplaintModel
-                {
-                    Id = row.Id,
-                    ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
-                    ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
-                    Description = preview,
-                    IncidentDate = row.IncidentDate
-                });
-            }
-
-            return View(complaints);
-        }
-
-        public ActionResult ComplaintDetails(int id)
-        {
-            var data = LoadComplaint(id).FirstOrDefault();
-            ComplaintModel complaint = new ComplaintModel();
-
-            complaint.Id = data.Id;
-            complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
-            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
-            complaint.Description = data.Details;
-            complaint.IncidentDate = data.IncidentDate;
-
-            return View(complaint);
-        }
-
-        public ActionResult EditComplaint(int id)
-        {
-            var data = LoadComplaint(id).FirstOrDefault();
-            ComplaintModel complaint = new ComplaintModel();
-
-            complaint.Id = data.Id;
-            complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);
-            complaint.ComplaintType = Enum.GetName(typeof(ComplaintType), data.ComplaintTypeId);
-            complaint.Description = data.Details;
-            complaint.IncidentDate = data.IncidentDate;
-
-            return View(complaint);
         }
 
         [HttpPost]
@@ -285,32 +197,6 @@ namespace Maple_Building_Management_App.Controllers
         {
             Session.Remove("User");
             return RedirectToAction("Index");
-        }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditComplaint(ComplaintModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                int recordUpdated = UpdateComplaint(
-                    model.Id,
-                    model.IncidentDate,
-                    model.Description,
-                    (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
-                    (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
-                );
-                return RedirectToAction("ViewComplaints");
-            }
-
-            return View();
-        }
-
-        public ActionResult DeleteComplaint(int id)
-        {
-            int recordDeleted = DeleteComplaintData(id);
-
-            return RedirectToAction("ViewComplaints");
         }
     }
 }
