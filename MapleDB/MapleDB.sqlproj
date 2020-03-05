@@ -67,4 +67,7 @@
   <ItemGroup>
     <PostDeploy Include="dbo\Tables\Script.PostDeployment1.sql" />
   </ItemGroup>
+  <ItemGroup>
+    <PreDeploy Include="dbo\Tables\Script.PreDeployment1.sql" />
+  </ItemGroup>
 </Project>

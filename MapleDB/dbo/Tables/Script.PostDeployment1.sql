@@ -18,4 +18,6 @@ BEGIN
 	INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (3, 'Maintenance');
 	INSERT INTO [dbo].[ComplaintType] ([Id], [Value]) VALUES (4, 'Noise');
    END
+
+   INSERT INTO [dbo].[Account] ([FirstName], [LastName], [Password], [Admin], [EmailAddress]) VALUES ('Maple', 'Admin', 'administrator', 1, 'propertymbm@gmail.com');
 END
