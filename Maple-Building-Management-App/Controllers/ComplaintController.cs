@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Mvc;
 using Maple_Building_Management_App.Models;
 using static DataLibrary.Logic.ComplaintProcessor;
+using AccountModel = DataLibrary.Models.AccountModel;
 
 namespace Maple_Building_Management_App.Controllers
 {
@@ -24,8 +25,7 @@ namespace Maple_Building_Management_App.Controllers
             model.ComplaintStatus = ComplaintStatus.Open.ToString();
             ViewBag.Message = "Create Complaint";
 
-            Session["TenantID"] = 1;
-            Session["PropertyID"] = 2;
+            SetSessionVars();
 
             return View(model);
         }
@@ -37,8 +37,7 @@ namespace Maple_Building_Management_App.Controllers
             if (ModelState.IsValid)
             {
                 int recordsCreated = CreateComplaint(
-                    //(int)Session["TenantID"],
-                    (int)Session["UserID"],
+                    (int)Session["TenantID"],
                     (int)Session["PropertyID"],
                     model.IncidentDate,
                     model.Description,
@@ -54,7 +53,8 @@ namespace Maple_Building_Management_App.Controllers
         public ActionResult ViewComplaints()
         {
             int preview_max = 15;
-            var data = LoadComplaintsByUserId((int)Session["UserID"]);
+            SetSessionVars();
+            var data = LoadComplaintsByUserId((int)Session["TenantID"]);
             List<ComplaintModel> complaints = new List<ComplaintModel>();
 
             foreach (var row in data)
@@ -160,6 +160,13 @@ namespace Maple_Building_Management_App.Controllers
             int recordDeleted = DeleteComplaintData(id);
 
             return RedirectToAction("ViewComplaints");
+        }
+
+        public void SetSessionVars()
+        {
+            AccountModel dbModel = (AccountModel)Session["User"];
+            Session["TenantID"] = dbModel.Id;
+            Session["PropertyID"] = 2;
         }
     }
 }
