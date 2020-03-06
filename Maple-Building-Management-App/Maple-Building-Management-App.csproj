@@ -223,7 +223,6 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Manage\SuccessPhoneNumber.cshtml" />
     <Content Include="Views\Home\VerifyAccount.cshtml" />
-    <Content Include="Views\Home\UpdateComplaint.cshtml" />
     <Content Include="Views\Complaint\ViewComplaints.cshtml" />
     <Content Include="Views\Complaint\ComplaintDetails.cshtml" />
     <Content Include="Views\Complaint\EditComplaint.cshtml" />

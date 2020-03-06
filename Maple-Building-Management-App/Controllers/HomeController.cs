@@ -196,6 +196,8 @@ namespace Maple_Building_Management_App.Controllers
         public ActionResult Logout()
         {
             Session.Remove("User");
+            Session.Remove("TenantID");
+            Session.Remove("PropertyID");
             return RedirectToAction("Index");
         }
     }

@@ -3,14 +3,14 @@
     ViewBag.Title = "Content Page";
 }
 
-<div class="text-center">
-    <img src="~/Images/MBM-service.jpg" />
-    <br />
-    <a class="btn btn-primary" onclick="location.href='@Url.Action("ComplainList")'"> Complain Page</a>
-    <a class="btn btn-primary" onclick="location.href='@Url.Action("Profile")'"> My Profile</a>
-    <a class="btn btn-primary" onclick="location.href='@Url.Action("Communication")'">Communication</a>
+    <div class="text-center">
+        <img src="~/Images/MBM-service.jpg" />
+        <br />
+        <a class="btn btn-primary" onclick="location.href='@Url.Action("ViewComplaints", "Complaint")'"> Complain Page</a>
+        <a class="btn btn-primary" onclick="location.href='@Url.Action("Profile")'"> My Profile</a>
+        <a class="btn btn-primary" onclick="location.href='@Url.Action("Communication")'">Communication</a>
 
-</div>
+    </div>
 <div>
     <h4>Complain</h4>
     <img src="~/Images/complain logo.png" style="float:right;"/>
