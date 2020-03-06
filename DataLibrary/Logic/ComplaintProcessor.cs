@@ -32,6 +32,13 @@ namespace DataLibrary.Logic
             return SqlDataAccess.SaveData(sql, data);
         }
 
+        public static List<ComplaintModel> LoadComplaintsByUserId(int userId)
+        {
+            //string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
+            string sql = "SELECT * FROM dbo.Complaint WHERE tenantId = "+userId+";";
+            return SqlDataAccess.LoadData<ComplaintModel>(sql);
+        }
+
         public static List<ComplaintModel> LoadComplaints()
         {
             //string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
@@ -49,7 +56,8 @@ namespace DataLibrary.Logic
                                           DateTime incidentDate,
                                           string details,
                                           int complaintStatusId,
-                                          int complaintTypeId)
+                                          int complaintTypeId,
+                                          string feedback)
         {
             ComplaintModel data = new ComplaintModel
             {
@@ -57,11 +65,12 @@ namespace DataLibrary.Logic
                 IncidentDate = incidentDate,
                 Details = details,
                 ComplaintStatusId = complaintStatusId,
-                ComplaintTypeId = complaintTypeId
+                ComplaintTypeId = complaintTypeId,
+                Feedback = feedback
             };
 
             string sql = @"UPDATE dbo.Complaint SET IncidentDate = @IncidentDate, Details = @Details, 
-                               ComplaintStatusId = @ComplaintStatusId, ComplaintTypeId = @ComplaintTypeId
+                               ComplaintStatusId = @ComplaintStatusId, ComplaintTypeId = @ComplaintTypeId, Feedback = @feedback
                                WHERE Id = @Id;";
             return SqlDataAccess.SaveData(sql, data);
         }
