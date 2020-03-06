@@ -3,6 +3,11 @@
     padding-bottom: 20px;
 }
 
+.responsive {
+    width: 100%;
+    height: auto;
+}
+
 /* Set padding to keep content from hitting the edges */
 .body-content {
     padding-left: 15px;

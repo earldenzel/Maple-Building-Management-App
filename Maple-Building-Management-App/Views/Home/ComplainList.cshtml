@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewBag.Title = "Complain Sevice Page";
+}
+
+<div class="text-center">
+    <h2>Complain Sevice Page</h2>
+    <h3>Report Complaint or Feedback Complaint</h3>
+    <img src="~/Images/complain-banner.jpg" class="responsive"/>
+    <br /><hr />
+</div>
+
+<div class="text-center">
+    <a class="btn btn-primary" onclick="location.href='@Url.Action("FileComplaint")'"> File Complaint</a>
+    <a class="btn btn-primary" onclick="location.href='@Url.Action("ComplainFeedback")'"> Give Feedback</a>
+    <p>
+        Maple Building Management offers a service where tenant can report one or many complaints about any rental issues by using the app.
+        Such as maintenence service, water problem, pest infestation or any other complaint to the property manager.
+        <br>Tenant can also use this service to give contructive feedback about the complaint service which resolved by the property manager.
+
+        <br />Complaint service help both tenant and property manager dynamically to report and handle the faulty issues in a effective way respectively.
+        Property manager can get the opportunity to improve the performance of apartment service by analyzing the feedbacks from the tenants.
+    </p>
+</div>
