@@ -220,6 +220,38 @@ namespace Maple_Building_Management_App.Controllers
 
             return View(profile);
         }
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            var data = LoadAccounts().FirstOrDefault();
+            AccountModel profile = new AccountModel();
+
+            profile.FirstName = data.FirstName;
+            profile.LastName = data.LastName;
+            profile.EmailAddress = data.EmailAddress;
+            profile.Tenant = data.Tenant;
+            profile.PropertyCode = data.PropertyCode;
+
+            return View(profile);
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditProfile(AccountModel profile)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        int recordsCreated = UpdateProfile(
+        //            profile.FirstName,
+        //            profile.LastName,
+        //            profile.EmailAddress,
+        //            profile.Tenant,
+        //            profile.PropertyCode);
+
+        //        return RedirectToAction("ViewProfile");
+        //    }
+        //    return View();
+        //}
 
         //[HttpPost]
         //[ValidateAntiForgeryToken]
