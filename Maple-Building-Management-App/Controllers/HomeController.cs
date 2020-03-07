@@ -125,7 +125,7 @@ namespace Maple_Building_Management_App.Controllers
                     body = "Good day, " + model.FirstName + "!" +
                         "\n\nYou are now registered as a property manager with us! We are glad to have you onboard. " +
                         "We aim to be the premier solution for your building management needs." +
-                        "\n\nYour property code is" + model.PropertyCode + 
+                        "\n\nYour property code is " + model.PropertyCode + 
                         "\n\nPlease keep a copy of this code with you. This code should be given to your tenants so they can access this application and help you " +
                         "manage the property you are renting to them! Please access the Maple Building Management web application through here: " +
                         "https://maple-building-management20200215053058.azurewebsites.net/ " +
@@ -207,6 +207,23 @@ namespace Maple_Building_Management_App.Controllers
 
         public ActionResult ContentPage()
         {
+            //this is where all session vars are now set
+            if (Session["User"] != null)
+            {
+                DataLibrary.Models.AccountModel dbModel = (DataLibrary.Models.AccountModel)Session["User"];
+                Session["Admin"] = dbModel.Admin;
+
+                if (dbModel.Tenant)
+                {
+                    Session["TenantID"] = dbModel.Id;
+                    DataLibrary.Models.AccountModel propertyManagerModel = SearchPropertyManager(dbModel.PropertyCode);
+                    Session["PropertyID"] = propertyManagerModel.Id;
+                }
+                else
+                {
+                    Session["PropertyID"] = dbModel.Id;
+                }
+            }
             return View();
         }
 
@@ -268,6 +285,7 @@ namespace Maple_Building_Management_App.Controllers
             Session.Remove("User");
             Session.Remove("TenantID");
             Session.Remove("PropertyID");
+            Session.Remove("Admin");
             return RedirectToAction("Index");
         }
 

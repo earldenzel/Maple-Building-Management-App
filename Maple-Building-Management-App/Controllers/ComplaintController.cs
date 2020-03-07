@@ -25,7 +25,6 @@ namespace Maple_Building_Management_App.Controllers
             model.ComplaintStatus = ComplaintStatus.Open.ToString();
             ViewBag.Message = "Create Complaint";
 
-            SetSessionVars();
 
             return View(model);
         }
@@ -53,8 +52,16 @@ namespace Maple_Building_Management_App.Controllers
         public ActionResult ViewComplaints()
         {
             int preview_max = 15;
-            SetSessionVars();
-            var data = LoadComplaintsByUserId((int)Session["TenantID"]);
+            List<DataLibrary.Models.ComplaintModel> data = new List<DataLibrary.Models.ComplaintModel>();
+            if (Session["TenantID"] != null)
+            {
+                data = LoadComplaintsByUserId((int)Session["TenantID"]);
+            }
+            else
+            {
+                data = LoadComplaintsByPropertyManager((int)Session["PropertyID"]);
+            }
+
             List<ComplaintModel> complaints = new List<ComplaintModel>();
 
             foreach (var row in data)
@@ -160,13 +167,6 @@ namespace Maple_Building_Management_App.Controllers
             int recordDeleted = DeleteComplaintData(id);
 
             return RedirectToAction("ViewComplaints");
-        }
-
-        public void SetSessionVars()
-        {
-            AccountModel dbModel = (AccountModel)Session["User"];
-            Session["TenantID"] = dbModel.Id;
-            Session["PropertyID"] = 2;
         }
     }
 }

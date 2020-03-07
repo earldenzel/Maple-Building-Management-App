@@ -35,7 +35,14 @@ namespace DataLibrary.Logic
         public static List<ComplaintModel> LoadComplaintsByUserId(int userId)
         {
             //string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
-            string sql = "SELECT * FROM dbo.Complaint WHERE tenantId = "+userId+";";
+            string sql = "SELECT * FROM dbo.Complaint WHERE TenantId = "+userId+";";
+            return SqlDataAccess.LoadData<ComplaintModel>(sql);
+        }
+
+        public static List<ComplaintModel> LoadComplaintsByPropertyManager(int userId)
+        {
+            //string sql = "SELECT TenantId, PropertyManagerId, IncidentDate, Details, ComplaintStatusId, ComplaintTypeId, ReportedDate from dbo.Complaint;";
+            string sql = "SELECT * FROM dbo.Complaint WHERE PropertyManagerId = " + userId + ";";
             return SqlDataAccess.LoadData<ComplaintModel>(sql);
         }
 

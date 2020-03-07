@@ -17,5 +17,6 @@ namespace DataLibrary.Models
         public string PropertyCode { get; set; }
         public bool TwoFactor { get; set; }
         public string PhoneNumber { get; set; }
+        public bool Admin { get; set; }
     }
 }
