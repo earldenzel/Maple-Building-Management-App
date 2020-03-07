@@ -58,6 +58,16 @@ namespace DataLibrary.Logic
             }
             return model.First();
         }
+        public static AccountModel SearchPropertyManager(string propertyCode)
+        {
+            string sql = "SELECT * from dbo.Account WHERE PropertyCode = '" + propertyCode + "' AND Tenant = 0;";
+            List<AccountModel> model = SqlDataAccess.LoadData<AccountModel>(sql);
+            if (model.Count == 0)
+            {
+                return null;
+            }
+            return model.First();
+        }
 
         public static int UpdatePhoneNumber(int id, string phoneNumber)
         {

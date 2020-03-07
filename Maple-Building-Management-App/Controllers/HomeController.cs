@@ -13,6 +13,8 @@ using Twilio.Rest.Api.V2010.Account;
 using Twilio.Types;
 using Twilio.TwiML;
 using Twilio.AspNet.Mvc;
+using System.Net.Mail;
+using System.Net;
 
 namespace Maple_Building_Management_App.Controllers
 {
@@ -70,8 +72,32 @@ namespace Maple_Building_Management_App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult Register(AccountModel model)
         {
+            DataLibrary.Models.AccountModel propertyManager = new DataLibrary.Models.AccountModel();
             if (ModelState.IsValid)
             {
+                if (model.Tenant)
+                {
+                    if (model.PropertyCode == null)
+                    {
+                        ViewBag.ErrorMessage = "Please supply property code, when registering as a tenant!";
+                        return View();
+                    }
+
+                    propertyManager = SearchPropertyManager(model.PropertyCode);
+                    if (propertyManager == null)
+                    {
+                        ViewBag.ErrorMessage = "That property code is not a valid property code";
+                        return View();
+                    }
+                }
+                else
+                {
+                    Random random = new Random();
+                    int value = random.Next(1000);
+                    string text = value.ToString("000");
+                    model.PropertyCode = (model.FirstName[0] + model.LastName + text).ToLower();
+                }
+
                 int recordsCreated = CreateAccount(
                     model.FirstName, 
                     model.LastName, 
@@ -79,6 +105,50 @@ namespace Maple_Building_Management_App.Controllers
                     model.Password,
                     model.Tenant, 
                     model.PropertyCode);
+
+
+                var senderEmail = new MailAddress("propertymbm@gmail.com");
+                var receiverEmail = new MailAddress(model.EmailAddress);
+                var password = "mapleB@1";
+                var sub = "Welcome to the Maple Building Management App";
+                string body = "";
+                if (model.Tenant)
+                {
+                    body = "Good day, " + model.FirstName + "!" +
+                        "\n\nWe are glad to have you with us!" +
+                        "\n\nYou are now registered as a tenant under property managed by " + propertyManager.FirstName + " " + propertyManager.LastName + ". " +
+                        "Please access the Maple Building Management web application through here: https://maple-building-management20200215053058.azurewebsites.net/ " +
+                        "\n\nSincerely,\n\nMaple Building Management Admin";
+                }
+                else
+                {
+                    body = "Good day, " + model.FirstName + "!" +
+                        "\n\nYou are now registered as a property manager with us! We are glad to have you onboard. " +
+                        "We aim to be the premier solution for your building management needs." +
+                        "\n\nYour property code is" + model.PropertyCode + 
+                        "\n\nPlease keep a copy of this code with you. This code should be given to your tenants so they can access this application and help you " +
+                        "manage the property you are renting to them! Please access the Maple Building Management web application through here: " +
+                        "https://maple-building-management20200215053058.azurewebsites.net/ " +
+                        "\n\nSincerely,\n\nMaple Building Management Admin";
+                }
+                
+                var smtp = new SmtpClient
+                {
+                    Host = "smtp.gmail.com",
+                    Port = 587,
+                    EnableSsl = true,
+                    DeliveryMethod = SmtpDeliveryMethod.Network,
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(senderEmail.Address, password)
+                };
+                using (var mess = new MailMessage(senderEmail, receiverEmail)
+                {
+                    Subject = sub,
+                    Body = body
+                })
+                {
+                    smtp.Send(mess);
+                }
                 return View("SuccessfulRegister", model);
             }
 
