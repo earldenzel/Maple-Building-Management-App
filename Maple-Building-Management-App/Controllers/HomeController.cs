@@ -200,31 +200,36 @@ namespace Maple_Building_Management_App.Controllers
             Session.Remove("PropertyID");
             return RedirectToAction("Index");
         }
-        
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult EditComplaint(ComplaintModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                int recordUpdated = UpdateComplaint(
-                    model.Id,
-                    model.IncidentDate,
-                    model.Description,
-                    (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
-                    (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
-                );
-                return RedirectToAction("ViewComplaints");
-            }
 
+        public ViewResult ComplainList()
+        {
             return View();
         }
 
-        public ActionResult DeleteComplaint(int id)
-        {
-            int recordDeleted = DeleteComplaintData(id);
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditComplaint(ComplaintModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        int recordUpdated = UpdateComplaint(
+        //            model.Id,
+        //            model.IncidentDate,
+        //            model.Description,
+        //            (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
+        //            (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
+        //        );
+        //        return RedirectToAction("ViewComplaints");
+        //    }
 
-            return RedirectToAction("ViewComplaints");
-        }
+        //    return View();
+        //}
+
+        //public ActionResult DeleteComplaint(int id)
+        //{
+        //    int recordDeleted = DeleteComplaintData(id);
+
+        //    return RedirectToAction("ViewComplaints");
+        //}
     }
 }

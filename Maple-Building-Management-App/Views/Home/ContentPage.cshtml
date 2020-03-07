@@ -3,32 +3,38 @@
     ViewBag.Title = "Content Page";
 }
 
-<div class="text-center">
-    <img src="~/Images/MBM-service.jpg" />
-    <br />
-    <a class="btn btn-primary" onclick="location.href='@Url.Action("ComplainList")'"> Complain Page</a>
-    <a class="btn btn-primary" onclick="location.href='@Url.Action("Profile")'"> My Profile</a>
-    <a class="btn btn-primary" onclick="location.href='@Url.Action("Communication")'">Communication</a>
-
+    <div class="text-center">
+        <style>
+            .responsive {
+                max-width: 100%;
+                max-width: 800px;
+                height: auto;
+            }
+        </style>
+        <img src="~/Images/MBM-service.jpg" class="responsive" />
+        <br /><hr />
+        <a class="btn btn-primary" onclick="location.href='@Url.Action("ComplainList")'"> Complain Page</a>
+        <a class="btn btn-primary" onclick="location.href='@Url.Action("ViewProfile")'"> My Profile</a>
+        <a class="btn btn-primary" onclick="location.href='@Url.Action("Communication")'">Communication</a>
     </div>
-<div>
-    <h4>Complain</h4>
-    <img src="~/Images/complain logo.png" style="float:right;"/>
-    <p>Tenants can see verious options where they can share or report any dislike or complain regarding any issues with Building service system or any default. Tenants can also give any positive or negative feedback about the service or status of handling cmplaint by the management.</p>
-</div>
-<br />
-<br />
-<div>
-    <h4>Profile</h4>
-    <img src="~/Images/Profile-logo.png" style="float:right;"/>
-    <p>Tenants can choose profile option to see the account with deatils information of the tenant and can edit the information.</p>
-</div>
-<br />
-<br />
-<div>
-    <h4>Communication</h4>
-    <img src="~/Images/Com-logo.png"style="float:right;" />
-    <p>
-        Tenants can select Communication option to contact the manage through Live-Chat, Email or SMS
-    </p>
-</div>
+        <div>
+            <h4>Complain</h4>
+            <img src="~/Images/complain logo.png" style="float:right;" />
+            <p>Tenants can see verious options where they can share or report any dislike or complain regarding any issues with Building service system or any default. Tenants can also give any positive or negative feedback about the service or status of handling cmplaint by the management.</p>
+        </div>
+        <br />
+        <br />
+        <div>
+            <h4>Profile</h4>
+            <img src="~/Images/Profile-logo.png" style="float:right;" />
+            <p>Tenants can choose profile option to see the account with deatils information of the tenant and can edit the information.</p>
+        </div>
+        <br />
+        <br />
+        <div>
+            <h4>Communication</h4>
+            <img src="~/Images/Com-logo.png" style="float:right;" />
+            <p>
+                Tenants can select Communication option to contact the manage through Live-Chat, Email or SMS
+            </p>
+        </div>
