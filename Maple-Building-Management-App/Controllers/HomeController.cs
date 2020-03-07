@@ -206,6 +206,21 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
+        [HttpGet]
+        public ActionResult ViewProfile()
+        {
+            var data = LoadAccounts().FirstOrDefault();
+            AccountModel profile = new AccountModel();
+
+            profile.FirstName = data.FirstName;
+            profile.LastName = data.LastName;
+            profile.EmailAddress = data.EmailAddress;
+            profile.Tenant = data.Tenant;
+            profile.PropertyCode = data.PropertyCode;
+
+            return View(profile);
+        }
+
         //[HttpPost]
         //[ValidateAntiForgeryToken]
         //public ActionResult EditComplaint(ComplaintModel model)
