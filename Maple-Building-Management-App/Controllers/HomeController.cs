@@ -270,5 +270,83 @@ namespace Maple_Building_Management_App.Controllers
             Session.Remove("PropertyID");
             return RedirectToAction("Index");
         }
+
+        public ViewResult ComplainList()
+        {
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult ViewProfile()
+        {
+            var data = LoadAccounts().FirstOrDefault();
+            AccountModel profile = new AccountModel();
+
+            profile.FirstName = data.FirstName;
+            profile.LastName = data.LastName;
+            profile.EmailAddress = data.EmailAddress;
+            profile.Tenant = data.Tenant;
+            profile.PropertyCode = data.PropertyCode;
+
+            return View(profile);
+        }
+        [HttpGet]
+        public ActionResult EditProfile()
+        {
+            var data = LoadAccounts().FirstOrDefault();
+            AccountModel profile = new AccountModel();
+
+            profile.FirstName = data.FirstName;
+            profile.LastName = data.LastName;
+            profile.EmailAddress = data.EmailAddress;
+            profile.Tenant = data.Tenant;
+            profile.PropertyCode = data.PropertyCode;
+
+            return View(profile);
+        }
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditProfile(AccountModel profile)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        int recordsCreated = UpdateProfile(
+        //            profile.FirstName,
+        //            profile.LastName,
+        //            profile.EmailAddress,
+        //            profile.Tenant,
+        //            profile.PropertyCode);
+
+        //        return RedirectToAction("ViewProfile");
+        //    }
+        //    return View();
+        //}
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult EditComplaint(ComplaintModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        int recordUpdated = UpdateComplaint(
+        //            model.Id,
+        //            model.IncidentDate,
+        //            model.Description,
+        //            (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
+        //            (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
+        //        );
+        //        return RedirectToAction("ViewComplaints");
+        //    }
+
+        //    return View();
+        //}
+
+        //public ActionResult DeleteComplaint(int id)
+        //{
+        //    int recordDeleted = DeleteComplaintData(id);
+
+        //    return RedirectToAction("ViewComplaints");
+        //}
     }
 }
