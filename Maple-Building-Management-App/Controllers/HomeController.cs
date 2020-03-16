@@ -179,16 +179,33 @@ namespace Maple_Building_Management_App.Controllers
                 if (matchingFound)
                 {
                     DataLibrary.Models.AccountModel dbModel = accountModel.First();
+
+                    // Account Type Indicator
+                    if (dbModel.Admin)
+                    {
+                        Session["UserType"] = "A";
+                    }
+                    else if (dbModel.Tenant)
+                    {
+                        Session["UserType"] = "T";
+                    }
+                    else
+                    {
+                        Session["UserType"] = "P";
+                    }
+                    Session["Email"] = dbModel.EmailAddress;
+                    //
+
                     if (dbModel.TwoFactor)
                     {
-                        Session["UserID"] = dbModel.Id;
+                        //Session["UserID"] = dbModel.Id;
                         Session["Phone"] = dbModel.PhoneNumber;
                         return RedirectToAction("VerifyAccount");
                     }
                     else
                     {
+                        //Session["UserID"] = dbModel.Id;
                         Session["User"] = dbModel;
-                        Session["UserID"] = dbModel.Id;
                         return RedirectToAction("ContentPage");
                     }
                 }
@@ -267,7 +284,7 @@ namespace Maple_Building_Management_App.Controllers
                 else if (string.Equals(model.VerificationCode, Session["ExpectedCodeLogin"].ToString()))
                 {
                     Session["User"] = SearchAccount((int)Session["UserID"]);
-                    Session.Remove("UserID");
+                    //Session.Remove("UserID");
                     Session.Remove("SentMessageLogin");
                     Session.Remove("ExpectedCodeLogin");
                     return RedirectToAction("ContentPage");
@@ -286,6 +303,7 @@ namespace Maple_Building_Management_App.Controllers
             Session.Remove("TenantID");
             Session.Remove("PropertyID");
             Session.Remove("Admin");
+            Session.Remove("UserType");
             return RedirectToAction("Index");
         }
 
@@ -323,48 +341,5 @@ namespace Maple_Building_Management_App.Controllers
             return View(profile);
         }
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditProfile(AccountModel profile)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        int recordsCreated = UpdateProfile(
-        //            profile.FirstName,
-        //            profile.LastName,
-        //            profile.EmailAddress,
-        //            profile.Tenant,
-        //            profile.PropertyCode);
-
-        //        return RedirectToAction("ViewProfile");
-        //    }
-        //    return View();
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditComplaint(ComplaintModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        int recordUpdated = UpdateComplaint(
-        //            model.Id,
-        //            model.IncidentDate,
-        //            model.Description,
-        //            (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
-        //            (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
-        //        );
-        //        return RedirectToAction("ViewComplaints");
-        //    }
-
-        //    return View();
-        //}
-
-        //public ActionResult DeleteComplaint(int id)
-        //{
-        //    int recordDeleted = DeleteComplaintData(id);
-
-        //    return RedirectToAction("ViewComplaints");
-        //}
     }
 }

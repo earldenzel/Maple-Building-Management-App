@@ -28,16 +28,16 @@
             <div class="navbar-collapse collapse">
                 <ul class="nav navbar-nav">
                     <li>@Html.ActionLink("Home", "Index", "Home")</li>
-                    [
+
                     @if (Session["User"] == null)
                     {
                         <li>@Html.ActionLink("Register", "Register", "Home")</li>
                         <li>@Html.ActionLink("Login", "Login", "Home")</li>
                     }
-                    ]
+
                     <li>@Html.ActionLink("About", "About", "Home")</li>
                     <li>@Html.ActionLink("Contact", "Contact", "Home")</li>
-                    [
+
                     @if (Session["User"] != null)
                     {
                         if ((bool)Session["Admin"])
@@ -56,8 +56,13 @@
                         <li>@Html.ActionLink("Manage Account", "Index", "Manage")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
 
+                        // Account Type Indicator
+                        <li>
+                            @*@Html.ActionLink("[" + Session["UserType"] + "] " + Session["Email"], "Index", "Manage")*@
+                            @Html.ActionLink("[ " + Session["UserType"] + " ]", "Index", "Manage")
+                        </li>
+
                     }
-                    ]
                 </ul>
             </div>
         </div>

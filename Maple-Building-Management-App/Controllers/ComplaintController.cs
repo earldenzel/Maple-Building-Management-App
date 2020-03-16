@@ -11,13 +11,6 @@ namespace Maple_Building_Management_App.Controllers
 {
     public class ComplaintController : Controller
     {
-        //// GET: Complaint
-        //public ActionResult Index()
-        //{
-        //    return View();
-        //}
-
-
         public ActionResult FileComplaint()
         {
             ComplaintModel model = new ComplaintModel();
