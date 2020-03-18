@@ -211,6 +211,7 @@ namespace Maple_Building_Management_App.Controllers
             if (Session["User"] != null)
             {
                 DataLibrary.Models.AccountModel dbModel = (DataLibrary.Models.AccountModel)Session["User"];
+                Session["ChatName"] = dbModel.FirstName + " " + dbModel.LastName;
                 Session["Admin"] = dbModel.Admin;
 
                 if (dbModel.Tenant)
@@ -286,6 +287,7 @@ namespace Maple_Building_Management_App.Controllers
             Session.Remove("TenantID");
             Session.Remove("PropertyID");
             Session.Remove("Admin");
+            Session.Remove("ChatName");
             return RedirectToAction("Index");
         }
 
