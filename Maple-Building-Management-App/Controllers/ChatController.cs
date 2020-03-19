@@ -20,18 +20,6 @@ namespace Maple_Building_Management_App.Controllers
             {
                 ViewBag.hdnFlag = "";
             }
-            if (Session["TenantID"] != null)
-            {
-                ViewBag.hdnId = Session["TenantID"];
-            }
-            else if (Session["PropertyID"] != null)
-            {
-                ViewBag.hdnId = Session["PropertyID"];
-            }
-            else
-            {
-                ViewBag.hdnId = "admin";
-            }
             return View();
         }
     }
