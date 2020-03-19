@@ -172,6 +172,7 @@
     <Compile Include="Hubs\ChatHub.cs" />
     <Compile Include="Models\AccountModel.cs" />
     <Compile Include="Models\ChangePasswordModel.cs" />
+    <Compile Include="Models\Chatter.cs" />
     <Compile Include="Models\ForgotPasswordModel.cs" />
     <Compile Include="Models\LoginModel.cs" />
     <Compile Include="Models\ComplaintModel.cs" />
