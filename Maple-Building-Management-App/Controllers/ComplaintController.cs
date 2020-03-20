@@ -26,6 +26,8 @@ namespace Maple_Building_Management_App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult FileComplaint(ComplaintModel model)
         {
+            //Console.WriteLine(model); // bug fixing in progress
+
             if (ModelState.IsValid)
             {
                 int recordsCreated = CreateComplaint(
