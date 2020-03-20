@@ -26,8 +26,6 @@ namespace Maple_Building_Management_App.Controllers
         [ValidateAntiForgeryToken]
         public ActionResult FileComplaint(ComplaintModel model)
         {
-            //Console.WriteLine(model); // bug fixing in progress
-
             if (ModelState.IsValid)
             {
                 int recordsCreated = CreateComplaint(
@@ -48,13 +46,24 @@ namespace Maple_Building_Management_App.Controllers
         {
             int preview_max = 15;
             List<DataLibrary.Models.ComplaintModel> data = new List<DataLibrary.Models.ComplaintModel>();
-            if (Session["TenantID"] != null)
+
+            bool isAdmin = (String)Session["UserType"] == "A" ? true : false;
+            //bool isAdmin = Session["Admin"];
+
+            if (isAdmin)
             {
-                data = LoadComplaintsByUserId((int)Session["TenantID"]);
+                data = LoadComplaints();
             }
             else
             {
-                data = LoadComplaintsByPropertyManager((int)Session["PropertyID"]);
+                if (Session["TenantID"] != null)
+                {
+                    data = LoadComplaintsByUserId((int)Session["TenantID"]);
+                }
+                else
+                {
+                    data = LoadComplaintsByPropertyManager((int)Session["PropertyID"]);
+                }
             }
 
             List<ComplaintModel> complaints = new List<ComplaintModel>();
@@ -80,32 +89,68 @@ namespace Maple_Building_Management_App.Controllers
             return View(complaints);
         }
 
-        public ActionResult ViewAllComplaints()
-        {
-            int preview_max = 15;
-            var data = LoadComplaints();
-            List<ComplaintModel> complaints = new List<ComplaintModel>();
+        //    public ActionResult ViewComplaints()
+        //{
+        //    int preview_max = 15;
+        //    List<DataLibrary.Models.ComplaintModel> data = new List<DataLibrary.Models.ComplaintModel>();
+        //    if (Session["TenantID"] != null)
+        //    {
+        //        data = LoadComplaintsByUserId((int)Session["TenantID"]);
+        //    }
+        //    else
+        //    {
+        //        data = LoadComplaintsByPropertyManager((int)Session["PropertyID"]);
+        //    }
 
-            foreach (var row in data)
-            {
-                string preview = row.Details.Substring(0, Math.Min(preview_max, row.Details.Length));
-                if (row.Details.Length > preview_max)
-                {
-                    preview += "...";
-                }
+        //    List<ComplaintModel> complaints = new List<ComplaintModel>();
 
-                complaints.Add(new ComplaintModel
-                {
-                    Id = row.Id,
-                    ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
-                    ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
-                    Description = preview,
-                    IncidentDate = row.IncidentDate,
-                });
-            }
+        //    foreach (var row in data)
+        //    {
+        //        string preview = row.Details.Substring(0, Math.Min(preview_max, row.Details.Length));
+        //        if (row.Details.Length > preview_max)
+        //        {
+        //            preview += "...";
+        //        }
 
-            return View(complaints);
-        }
+        //        complaints.Add(new ComplaintModel
+        //        {
+        //            Id = row.Id,
+        //            ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
+        //            ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
+        //            Description = preview,
+        //            IncidentDate = row.IncidentDate,
+        //        });
+        //    }
+
+        //    return View(complaints);
+        //}
+
+        //public ActionResult ViewAllComplaints()
+        //{
+        //    int preview_max = 15;
+        //    var data = LoadComplaints();
+        //    List<ComplaintModel> complaints = new List<ComplaintModel>();
+
+        //    foreach (var row in data)
+        //    {
+        //        string preview = row.Details.Substring(0, Math.Min(preview_max, row.Details.Length));
+        //        if (row.Details.Length > preview_max)
+        //        {
+        //            preview += "...";
+        //        }
+
+        //        complaints.Add(new ComplaintModel
+        //        {
+        //            Id = row.Id,
+        //            ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), row.ComplaintStatusId),
+        //            ComplaintType = Enum.GetName(typeof(ComplaintType), row.ComplaintTypeId),
+        //            Description = preview,
+        //            IncidentDate = row.IncidentDate,
+        //        });
+        //    }
+
+        //    return View(complaints);
+        //}
 
         public ActionResult ComplaintDetails(int id)
         {

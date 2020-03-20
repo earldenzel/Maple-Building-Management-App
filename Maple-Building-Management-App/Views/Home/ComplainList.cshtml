@@ -17,15 +17,23 @@
         <br /><hr />
     </div>
 
-<div class="text-center">
-    <a class="btn btn-primary" onclick="location.href='@Url.Action("FileComplaint", "Complaint")'"> File Complaint</a>
-    @*<a class="btn btn-primary" onclick="location.href='@Url.Action("FeedbackComplain")'"> Give Feedback</a>*@
-    <p>
-        Maple Building Management offers a service where tenant can report one or many complaints about any rental issues by using the app.
-        Such as maintenence service, water problem, pest infestation or any other complaint to the property manager.
-        <br>Tenant can also use this service to give contructive feedback about the complaint service which resolved by the property manager.
+    <div class="text-center">
+        <a class="btn btn-primary" onclick="location.href='@Url.Action("ViewComplaints", "Complaint")'"> Complaint List</a>
 
-        <br />Complaint service help both tenant and property manager dynamically to report and handle the faulty issues in a effective way respectively.
-        Property manager can get the opportunity to improve the performance of apartment service by analyzing the feedbacks from the tenants.
-    </p>
-</div>
+        @*
+            A Property Manager can access FileComplaint from this page, and it causes ERROR because Property Manager doesn't have TenantID needed for file a complaint.
+        So, temporarily block below code and link to Complaint List here.
+        This should be discussed later before final iteration.
+            *@
+
+        @*<a class="btn btn-primary" onclick="location.href='@Url.Action("FileComplaint", "Complaint")'"> File Complaint</a>*@
+        @*<a class="btn btn-primary" onclick="location.href='@Url.Action("FeedbackComplain")'"> Give Feedback</a>*@
+        <p>
+            Maple Building Management offers a service where tenant can report one or many complaints about any rental issues by using the app.
+            Such as maintenence service, water problem, pest infestation or any other complaint to the property manager.
+            <br>Tenant can also use this service to give contructive feedback about the complaint service which resolved by the property manager.
+
+            <br />Complaint service help both tenant and property manager dynamically to report and handle the faulty issues in a effective way respectively.
+            Property manager can get the opportunity to improve the performance of apartment service by analyzing the feedbacks from the tenants.
+        </p>
+    </div>

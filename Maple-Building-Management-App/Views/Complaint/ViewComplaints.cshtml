@@ -47,3 +47,8 @@
     }
 
 </table>
+
+@if ((String)Session["UserType"] == "T")
+{
+    <a class="btn btn-primary right" onclick="location.href='@Url.Action("FileComplaint", "Complaint")'"> File Complaint</a>
+}
