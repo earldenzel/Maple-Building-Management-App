@@ -348,8 +348,8 @@ namespace Maple_Building_Management_App.Controllers
             return View(profile);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
         //public ActionResult EditProfile(AccountModel profile)
         //{
         //    if (ModelState.IsValid)
