@@ -61,6 +61,30 @@ namespace Maple_Building_Management_App.Controllers
             return View(accounts);
         }
 
+        public ActionResult ViewTenantAccount()
+        {
+            ViewBag.Message = "Accounts List";
+            var data = LoadAccounts();
+
+            List<AccountModel> accounts = new List<AccountModel>();
+
+            foreach (var row in data)
+            {
+                if (row.Tenant == true)
+                {
+                    accounts.Add(new AccountModel
+                    {
+                        FirstName = row.FirstName,
+                        LastName = row.LastName,
+                        EmailAddress = row.EmailAddress,
+                        Tenant = row.Tenant,
+                        PropertyCode = row.PropertyCode
+                    });
+                }
+            }
+            return View(accounts);
+        }
+
         public ActionResult Register()
         {
             ViewBag.Message = "App Registration";
@@ -297,15 +321,16 @@ namespace Maple_Building_Management_App.Controllers
         [HttpGet]
         public ActionResult ViewProfile()
         {
-            var data = LoadAccounts().FirstOrDefault();
+            ViewBag.Message = "Accounts List";
             AccountModel profile = new AccountModel();
+                var data = LoadAccounts().FirstOrDefault();
+                profile.FirstName = data.FirstName;
+                profile.LastName = data.LastName;
+                profile.EmailAddress = data.EmailAddress;
+                profile.Tenant = data.Tenant;
+                profile.PropertyCode = data.PropertyCode;
 
-            profile.FirstName = data.FirstName;
-            profile.LastName = data.LastName;
-            profile.EmailAddress = data.EmailAddress;
-            profile.Tenant = data.Tenant;
-            profile.PropertyCode = data.PropertyCode;
-
+            
             return View(profile);
         }
         [HttpGet]
@@ -339,32 +364,6 @@ namespace Maple_Building_Management_App.Controllers
         //        return RedirectToAction("ViewProfile");
         //    }
         //    return View();
-        //}
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditComplaint(ComplaintModel model)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        int recordUpdated = UpdateComplaint(
-        //            model.Id,
-        //            model.IncidentDate,
-        //            model.Description,
-        //            (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
-        //            (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
-        //        );
-        //        return RedirectToAction("ViewComplaints");
-        //    }
-
-        //    return View();
-        //}
-
-        //public ActionResult DeleteComplaint(int id)
-        //{
-        //    int recordDeleted = DeleteComplaintData(id);
-
-        //    return RedirectToAction("ViewComplaints");
         //}
     }
 }
