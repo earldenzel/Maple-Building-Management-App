@@ -53,7 +53,7 @@
                         if (!(bool)Session["Admin"])
                         {
                             <li>@Html.ActionLink("View My Complaints", "ViewComplaints", "Complaint")</li>
-                            //<li>@Html.ActionLink("View Tenant Accounts", "ViewTenantAccount", "Home")</li>
+                            <li>@Html.ActionLink("View Tenant Accounts", "ViewTenantAccount", "Home")</li>
                         }
                         <li>@Html.ActionLink("Manage Account", "Index", "Manage")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
