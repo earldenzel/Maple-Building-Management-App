@@ -350,51 +350,20 @@ namespace Maple_Building_Management_App.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult EditProfile(AccountModel profile)
-        {
-            if (ModelState.IsValid)
-            {
-                int recordsCreated = UpdateProfile(
-                    profile.FirstName,
-                    profile.LastName,
-                    profile.EmailAddress,
-                    profile.Tenant,
-                    profile.PropertyCode);
-
-                return RedirectToAction("ViewProfile");
-            }
-            return View();
-        }
-
-        private int UpdateProfile(string firstName, string lastName, string emailAddress, bool tenant, string propertyCode)
-        {
-            throw new NotImplementedException();
-        }
-
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult EditComplaint(ComplaintModel model)
+        //public ActionResult EditProfile(AccountModel profile)
         //{
         //    if (ModelState.IsValid)
         //    {
-        //        int recordUpdated = UpdateComplaint(
-        //            model.Id,
-        //            model.IncidentDate,
-        //            model.Description,
-        //            (int)Enum.Parse(typeof(ComplaintStatus), model.ComplaintStatus),
-        //            (int)Enum.Parse(typeof(ComplaintType), model.ComplaintType)
-        //        );
-        //        return RedirectToAction("ViewComplaints");
+        //        int recordsCreated = UpdateProfile(
+        //            profile.FirstName,
+        //            profile.LastName,
+        //            profile.EmailAddress,
+        //            profile.Tenant,
+        //            profile.PropertyCode);
+
+        //        return RedirectToAction("ViewProfile");
         //    }
-
         //    return View();
-        //}
-
-        //public ActionResult DeleteComplaint(int id)
-        //{
-        //    int recordDeleted = DeleteComplaintData(id);
-
-        //    return RedirectToAction("ViewComplaints");
         //}
     }
 }
