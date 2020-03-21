@@ -42,7 +42,6 @@
                         if ((bool)Session["Admin"])
                         {
                             <li>@Html.ActionLink("View All Accounts", "ViewAccounts", "Home")</li>
-                            @*<li>@Html.ActionLink("View All Complaints", "ViewAllComplaints", "Complaint")</li>*@
                             <li>@Html.ActionLink("View All Complaints", "ViewComplaints", "Complaint")</li>
                         }
                         else if (Session["TenantID"] != null)
@@ -60,20 +59,16 @@
                             else
                             {
                                 <li>@Html.ActionLink("View Complaints", "ViewComplaints", "Complaint")</li>
+                                <li>@Html.ActionLink("View My Tenants", "ViewTenantAccount", "Home")</li>
                             }
-                            <li>@Html.ActionLink("View Tenant Accounts", "ViewTenantAccount", "Home")</li>
                         }
                         <li>@Html.ActionLink("Manage Account", "Index", "Manage")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
 
                         // Account Type Indicator
                         <li>
-                            @*@Html.ActionLink("[" + Session["UserType"] + "] " + Session["Email"], "Index", "Manage")*@
                             @Html.ActionLink("[ " + Session["UserType"] + " ]", "Index", "Manage")
                         </li>
-
-                        <li>@Html.ActionLink("Manage Account", "Index", "Manage")</li>
-                        <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
                     }
                 </ul>
             </div>
