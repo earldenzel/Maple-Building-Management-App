@@ -167,10 +167,25 @@ namespace Maple_Building_Management_App.Controllers
             return View(complaint);
         }
 
-        public ActionResult EditComplaint(int id)
+        public ActionResult ResolveComplaint(int id)
+        {
+            int recordUpdated = UpdateComplaintStatus(
+                id,
+                (int)ComplaintStatus.Resolved
+            );
+
+            return RedirectToAction("ComplaintDetails", new { id = id });
+        }
+
+            public ActionResult EditComplaint(int id)
         {
             var data = LoadComplaint(id).FirstOrDefault();
             ComplaintModel complaint = new ComplaintModel();
+
+            ////-
+            //IEnumerable<SelectListItem> selectList = Enum.GetValues(typeof(ComplaintStatus));
+
+            ////
 
             complaint.Id = data.Id;
             complaint.ComplaintStatus = Enum.GetName(typeof(ComplaintStatus), data.ComplaintStatusId);

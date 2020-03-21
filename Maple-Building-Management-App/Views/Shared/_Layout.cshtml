@@ -53,7 +53,14 @@
 
                         if (!(bool)Session["Admin"])
                         {
-                            <li>@Html.ActionLink("View My Complaints", "ViewComplaints", "Complaint")</li>
+                            if (Session["TenantID"] != null)
+                            {
+                                <li>@Html.ActionLink("View My Complaints", "ViewComplaints", "Complaint")</li>
+                            }
+                            else
+                            {
+                                <li>@Html.ActionLink("View Complaints", "ViewComplaints", "Complaint")</li>
+                            }
                         }
                         <li>@Html.ActionLink("Manage Account", "Index", "Manage")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
