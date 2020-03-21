@@ -27,3 +27,23 @@ select,
 textarea {
     max-width: 280px;
 }
+
+#wrapper {
+    display: flex;
+}
+
+#chatBox {
+    flex: 0 0 65%;
+}
+
+#userList {
+    flex: 1;
+}
+
+#discussion{
+    padding: 5px 0px;
+}
+
+#discussion div{
+    padding: 5px 10px;
+}

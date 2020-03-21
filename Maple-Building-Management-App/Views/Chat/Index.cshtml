@@ -1,17 +1,20 @@
 ﻿@{
     ViewBag.Title = "Chat";
 }
-<div class="container" id="chatBox">
-    <h2>Chat</h2>
-    <input type="text" id="message" />
-    <input type="button" id="sendmessage" value="Send" />
-    <input type="hidden" id="displayname" value="@ViewBag.hdnFlag" />
-    <div id="discussion">
+<div class="container" id="wrapper">
+    <div id="chatBox">
+        <h2>Chat</h2>
+        <input type="text" id="message" />
+        <input type="button" id="sendmessage" value="Send" />
+        <input type="hidden" id="displayname" value="@ViewBag.hdnFlag" />
+        <input type="hidden" id="displaytitle" value="@ViewBag.userTitle" />
+        <div id="discussion">
+        </div>
+    </div>
+    <div id="userList">
     </div>
 </div>
 
-<div class="container" id="userList">
-</div>
 @section scripts {
     <!--Script references. -->
     <!--The jQuery library is required and is referenced by default in _Layout.cshtml. -->
@@ -47,25 +50,32 @@
                     });
                 });
             };
+
             // Get the user name and store it to prepend to messages.
-            if ($('#displayname').length === 0) {
+            if ($('#displayname').val().length == 0) {
                 $('#displayname').val(prompt('Enter your name:', ''));
             }
             // Set initial focus to message input box.
             $('#message').focus();
             // Start the connection.
             $.connection.hub.start().done(function () {
-                chat.server.enter($('#displayname').val());
+                chat.server.enter($('#displayname').val(), $('#displaytitle').val());
 
                 $('#sendmessage').click(function () {
                     // Call the Send method on the hub.
-                    chat.server.send($('#displayname').val(), $('#message').val());
+                    chat.server.send($('#displayname').val(), $('#displaytitle').val(), $('#message').val());
                     // Clear text box and reset focus for next comment.
                     $('#message').val('').focus();
                 });
             });
 
+            window.onunload = function () {
+                $.connection.hub.stop();
+            }
 
+            window.onbeforeunload = function () {
+                $.connection.hub.stop();
+            }
         });
         // This optional function html-encodes messages for display in the page.
         function htmlEncode(value) {

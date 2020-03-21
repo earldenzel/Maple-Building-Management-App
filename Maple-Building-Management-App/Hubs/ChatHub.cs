@@ -25,22 +25,29 @@ namespace Maple_Building_Management_App.Hubs
             return base.OnDisconnected(stopCalled);
         }
 
-        public void Send(string name, string message)
+        public void Send(string name, string title, string message)
         {
             // Call the addNewMessageToPage method to update clients.
-            Clients.All.addNewMessageToPage(name, message);
+            Clients.All.addNewMessageToPage(fullTitle(name, title), message);
         }
 
-        public void Enter(string name)
+        public void Exit(string name, string title)
         {
-            Clients.All.addNewPersonToPage(name);
+            Clients.All.addDisconnectionNotice(fullTitle(name, title));
+            Clients.All.refreshClientList();
+
+        }
+
+        public void Enter(string name, string title)
+        {
+            Clients.All.addNewPersonToPage(fullTitle(name, title));
             Clients.All.refreshClientList();
 
             var id = Context.ConnectionId;
 
             if (SignalRUsers.Count(x => x.ConnectionId == id) == 0)
             {
-                SignalRUsers.Add(new Chatter { ConnectionId = id, UserName = name });
+                SignalRUsers.Add(new Chatter { ConnectionId = id, UserName = fullTitle(name, title) });
             }
         }
 
@@ -53,6 +60,11 @@ namespace Maple_Building_Management_App.Hubs
                 users.Add(chatter.UserName);
             }
             return users;
+        }
+
+        private string fullTitle(string name, string title)
+        {
+            return name + " (" + title + ")";
         }
     }
 }

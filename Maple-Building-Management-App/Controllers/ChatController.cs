@@ -15,10 +15,23 @@ namespace Maple_Building_Management_App.Controllers
             if (Session["ChatName"] != null)
             {
                 ViewBag.hdnFlag = Session["ChatName"];
+                if ((bool)Session["Admin"])
+                {
+                    ViewBag.userTitle = "Administrator";
+                }
+                else if (Session["TenantID"] != null)
+                {
+                    ViewBag.userTitle = "Tenant";
+                }
+                else
+                {
+                    ViewBag.userTitle = "Property Manager";
+                }
             }
             else
             {
                 ViewBag.hdnFlag = "";
+                ViewBag.userTitle = "Guest";
             }
             return View();
         }
