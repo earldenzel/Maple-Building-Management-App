@@ -203,16 +203,33 @@ namespace Maple_Building_Management_App.Controllers
                 if (matchingFound)
                 {
                     DataLibrary.Models.AccountModel dbModel = accountModel.First();
+
+                    // Account Type Indicator
+                    if (dbModel.Admin)
+                    {
+                        Session["UserType"] = "A";
+                    }
+                    else if (dbModel.Tenant)
+                    {
+                        Session["UserType"] = "T";
+                    }
+                    else
+                    {
+                        Session["UserType"] = "P";
+                    }
+                    Session["Email"] = dbModel.EmailAddress;
+                    //
+
                     if (dbModel.TwoFactor)
                     {
-                        Session["UserID"] = dbModel.Id;
+                        //Session["UserID"] = dbModel.Id;
                         Session["Phone"] = dbModel.PhoneNumber;
                         return RedirectToAction("VerifyAccount");
                     }
                     else
                     {
+                        //Session["UserID"] = dbModel.Id;
                         Session["User"] = dbModel;
-                        Session["UserID"] = dbModel.Id;
                         return RedirectToAction("ContentPage");
                     }
                 }
@@ -292,7 +309,7 @@ namespace Maple_Building_Management_App.Controllers
                 else if (string.Equals(model.VerificationCode, Session["ExpectedCodeLogin"].ToString()))
                 {
                     Session["User"] = SearchAccount((int)Session["UserID"]);
-                    Session.Remove("UserID");
+                    //Session.Remove("UserID");
                     Session.Remove("SentMessageLogin");
                     Session.Remove("ExpectedCodeLogin");
                     return RedirectToAction("ContentPage");
@@ -311,6 +328,7 @@ namespace Maple_Building_Management_App.Controllers
             Session.Remove("TenantID");
             Session.Remove("PropertyID");
             Session.Remove("Admin");
+            Session.Remove("UserType");
             Session.Remove("ChatName");
             return RedirectToAction("Index");
         }

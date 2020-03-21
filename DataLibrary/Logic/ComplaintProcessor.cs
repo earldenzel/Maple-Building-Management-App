@@ -82,6 +82,20 @@ namespace DataLibrary.Logic
             return SqlDataAccess.SaveData(sql, data);
         }
 
+        public static int UpdateComplaintStatus(int id,
+                                          int complaintStatusId)
+        {
+            ComplaintModel data = new ComplaintModel
+            {
+                Id = id,
+                ComplaintStatusId = complaintStatusId
+            };
+
+            string sql = @"UPDATE dbo.Complaint SET ComplaintStatusId = @ComplaintStatusId
+                               WHERE Id = @Id;";
+            return SqlDataAccess.SaveData(sql, data);
+        }
+
         public static int DeleteComplaintData(int id)
         {
             string sql = "DELETE FROM dbo.Complaint WHERE Id = '" + id + "';";
