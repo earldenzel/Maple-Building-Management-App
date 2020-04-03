@@ -70,7 +70,7 @@ namespace Maple_Building_Management_App.Controllers
 
             foreach (var row in data)
             {
-                if (row.Tenant == true)
+                if (row.Tenant == true && row.PropertyCode == (string)Session["PropertyCode"])
                 {
                     accounts.Add(new AccountModel
                     {
@@ -216,6 +216,7 @@ namespace Maple_Building_Management_App.Controllers
                     else
                     {
                         Session["UserType"] = "P";
+                        Session["PropertyCode"] = dbModel.PropertyCode;
                     }
                     Session["Email"] = dbModel.EmailAddress;
                     //
