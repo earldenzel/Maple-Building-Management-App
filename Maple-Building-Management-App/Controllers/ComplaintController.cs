@@ -18,7 +18,6 @@ namespace Maple_Building_Management_App.Controllers
             model.ComplaintStatus = ComplaintStatus.Open.ToString();
             ViewBag.Message = "Create Complaint";
 
-
             return View(model);
         }
 
@@ -42,13 +41,13 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
-        public ActionResult ViewComplaints()
+        public ActionResult ViewComplaints(string sortOrder, string searchString)
         {
+            ViewBag.DateSortParm = sortOrder == "Date" ? "date_desc" : "Date";
             int preview_max = 15;
             List<DataLibrary.Models.ComplaintModel> data = new List<DataLibrary.Models.ComplaintModel>();
 
             bool isAdmin = (String)Session["UserType"] == "A" ? true : false;
-            //bool isAdmin = Session["Admin"];
 
             if (isAdmin)
             {
@@ -65,6 +64,62 @@ namespace Maple_Building_Management_App.Controllers
                     data = LoadComplaintsByPropertyManager((int)Session["PropertyID"]);
                 }
             }
+
+            bool showResolved = false;
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                switch (searchString.ToLower())
+                {
+                    case "open":
+                        data = data.Where(s => s.ComplaintStatusId.Equals(1)).ToList();
+                        break;
+                    case "pending":
+                        data = data.Where(s => s.ComplaintStatusId.Equals(2)).ToList();
+                        break;
+                    case "resolved":
+                        data = data.Where(s => s.ComplaintStatusId.Equals(3)).ToList();
+                        showResolved = true;
+                        break;
+                    case "reopened":
+                        data = data.Where(s => s.ComplaintStatusId.Equals(4)).ToList();
+                        break;
+                    case "emergency":
+                        data = data.Where(s => s.ComplaintTypeId.Equals(1)).ToList();
+                        break;
+                    case "pests":
+                        data = data.Where(s => s.ComplaintTypeId.Equals(2)).ToList();
+                        break;
+                    case "maintenance":
+                        data = data.Where(s => s.ComplaintTypeId.Equals(3)).ToList();
+                        break;
+                    case "noise":
+                        data = data.Where(s => s.ComplaintTypeId.Equals(4)).ToList();
+                        break;
+                    default:
+                        data = data.Where(s => s.Details.Contains(searchString)).ToList();
+                        break;
+                }
+            }
+            
+            if (!showResolved)
+            {
+                data = data.Where(s => !s.ComplaintStatusId.Equals(3)).ToList();
+
+            }
+
+            switch (sortOrder)
+            {
+                case "Date":
+                    data = data.OrderBy(s => s.IncidentDate).ToList();
+                    break;
+                case "date_desc":
+                    data = data.OrderByDescending(s => s.IncidentDate).ToList();
+                    break;
+                default:
+                    break;
+
+            }
+            
 
             List<ComplaintModel> complaints = new List<ComplaintModel>();
 
