@@ -62,13 +62,13 @@
                                 <li>@Html.ActionLink("View My Tenants", "ViewTenantAccount", "Home")</li>
                             }
                         }
-                        <li>@Html.ActionLink("Manage Account", "Index", "Manage")</li>
+                        <li>@Html.ActionLink("Manage Account" + " (" + Session["UserType"] + ")", "Index", "Manage")</li>
                         <li>@Html.ActionLink("Logout", "Logout", "Home")</li>
 
-                        // Account Type Indicator
+                        @*// Account Type Indicator
                         <li>
                             @Html.ActionLink("[ " + Session["UserType"] + " ]", "Index", "Manage")
-                        </li>
+                        </li>*@
                     }
                 </ul>
             </div>

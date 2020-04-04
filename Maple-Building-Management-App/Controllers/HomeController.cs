@@ -70,7 +70,7 @@ namespace Maple_Building_Management_App.Controllers
 
             foreach (var row in data)
             {
-                if (row.Tenant == true)
+                if (row.Tenant == true && row.PropertyCode == (string)Session["PropertyCode"])
                 {
                     accounts.Add(new AccountModel
                     {
@@ -216,6 +216,7 @@ namespace Maple_Building_Management_App.Controllers
                     else
                     {
                         Session["UserType"] = "P";
+                        Session["PropertyCode"] = dbModel.PropertyCode;
                     }
                     Session["Email"] = dbModel.EmailAddress;
                     //
@@ -343,14 +344,14 @@ namespace Maple_Building_Management_App.Controllers
         {
             ViewBag.Message = "Accounts List";
             AccountModel profile = new AccountModel();
-                var data = LoadAccounts().FirstOrDefault();
-                profile.FirstName = data.FirstName;
-                profile.LastName = data.LastName;
-                profile.EmailAddress = data.EmailAddress;
-                profile.Tenant = data.Tenant;
-                profile.PropertyCode = data.PropertyCode;
+            //var data = LoadAccounts().FirstOrDefault();
+            DataLibrary.Models.AccountModel data = (DataLibrary.Models.AccountModel)Session["User"];
+            profile.FirstName = data.FirstName;
+            profile.LastName = data.LastName;
+            profile.EmailAddress = data.EmailAddress;
+            profile.Tenant = data.Tenant;
+            profile.PropertyCode = data.PropertyCode;
 
-            
             return View(profile);
         }
         [HttpGet]
