@@ -344,14 +344,14 @@ namespace Maple_Building_Management_App.Controllers
         {
             ViewBag.Message = "Accounts List";
             AccountModel profile = new AccountModel();
-                var data = LoadAccounts().FirstOrDefault();
-                profile.FirstName = data.FirstName;
-                profile.LastName = data.LastName;
-                profile.EmailAddress = data.EmailAddress;
-                profile.Tenant = data.Tenant;
-                profile.PropertyCode = data.PropertyCode;
+            //var data = LoadAccounts().FirstOrDefault();
+            DataLibrary.Models.AccountModel data = (DataLibrary.Models.AccountModel)Session["User"];
+            profile.FirstName = data.FirstName;
+            profile.LastName = data.LastName;
+            profile.EmailAddress = data.EmailAddress;
+            profile.Tenant = data.Tenant;
+            profile.PropertyCode = data.PropertyCode;
 
-            
             return View(profile);
         }
         [HttpGet]
