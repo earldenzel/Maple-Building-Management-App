@@ -39,11 +39,63 @@ namespace Maple_Building_Management_App.Controllers
             return View();
         }
 
-        public ActionResult ViewAccounts()
+        public ActionResult ViewAccounts(string sortOrder, string searchString)
         {
+            ViewBag.LastNameSort = String.IsNullOrEmpty(sortOrder) ? "ln_desc" : "";
+            ViewBag.FirstNameSort = sortOrder == "FirstName" ? "fn_desc" : "FirstName";
+            ViewBag.EmailAddressSort = sortOrder == "EmailAddress" ? "ea_desc" : "EmailAddress";
+            ViewBag.PropertyCodeSort = sortOrder == "PropertyCode" ? "pc_desc" : "PropertyCode";
             ViewBag.Message = "Accounts List";
 
             var data = LoadAccounts();
+
+            if (!String.IsNullOrEmpty(searchString))
+            {
+                switch (searchString.ToLower())
+                {
+                    case "tenant":
+                        data = data.Where(s => s.Tenant.Equals(true)).ToList();
+                        break;
+                    case "property manager":
+                        data = data.Where(s => s.Tenant.Equals(false)).ToList();
+                        break;
+                    default:
+                        data = data.Where(s => s.FirstName.Contains(searchString) 
+                                            || s.LastName.Contains(searchString) 
+                                            || s.EmailAddress.Contains(searchString)
+                                            || (s.PropertyCode != null && s.PropertyCode.Contains(searchString))).ToList();
+                        break;
+                }
+            }
+
+            switch (sortOrder)
+            {
+                case "ln_desc":
+                    data = data.OrderByDescending(s => s.LastName).ToList();
+                    break;
+                case "fn_desc":
+                    data = data.OrderByDescending(s => s.FirstName).ToList();
+                    break;
+                case "FirstName":
+                    data = data.OrderBy(s => s.FirstName).ToList();
+                    break;
+                case "ea_desc":
+                    data = data.OrderByDescending(s => s.EmailAddress).ToList();
+                    break;
+                case "EmailAddress":
+                    data = data.OrderBy(s => s.EmailAddress).ToList();
+                    break;
+                case "pc_desc":
+                    data = data.OrderByDescending(s => s.PropertyCode).ToList();
+                    break;
+                case "PropertyCode":
+                    data = data.OrderBy(s => s.PropertyCode).ToList();
+                    break;
+                default:
+                    data = data.OrderBy(s => s.LastName).ToList();
+                    break;
+
+            }
 
             List<AccountModel> accounts = new List<AccountModel>();
 
